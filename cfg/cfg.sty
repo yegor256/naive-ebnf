@@ -57,24 +57,24 @@
 \makeatother
 
 \makeatletter
-\newcommand\ebnf@optional[1]
+\newcommand\cfg@optional[1]
   {\cfg@color{gray}{[} #1 \cfg@color{gray}{]}}
-\newcommand\ebnf@multi[1]
+\newcommand\cfg@multi[1]
   {\cfg@color{gray}{\{} #1 \cfg@color{gray}{\}}}
-\newcommand\ebnf@variable[1]
+\newcommand\cfg@variable[1]
   {{\sffamily$\langle$#1$\rangle$}}
 \ExplSyntaxOn
-\newcommand\ebnf@terminal[1]{
+\newcommand\cfg@terminal[1]{
   \tl_set:Nn \l_cfg_tl { }
   \tl_set_rescan:Nno \l_cfg_tl { } { #1 }
   {\ttfamily\cfg@color{gray}{"}{\l_cfg_tl}\cfg@color{gray}{"}}
 }
 \ExplSyntaxOff
-\newcommand\ebnf@to
+\newcommand\cfg@to
   {\cfg@color{gray}{\(\to\)}}
-\newcommand\ebnf@or
+\newcommand\cfg@or
   {\cfg@color{gray}{\(\vert\)}}
-\newcommand\ebnf@eol{\\}
+\newcommand\cfg@eol{\\}
 \makeatother
 
 \ExplSyntaxOn
@@ -83,23 +83,23 @@
   \endfilecontentsdefmacro
   \str_set:NV \l__cfg_tmp_tl \l__cfg_tmp_tl
   \regex_replace_all:nnN { \{(.+)\} }
-    { \c{ebnf@multi}{\1} } \l__cfg_tmp_tl
+    { \c{cfg@multi}{\1} } \l__cfg_tmp_tl
   \regex_replace_all:nnN { <([A-Z][a-z]+)> }
-    { \c{ebnf@variable}{\1} } \l__cfg_tmp_tl
+    { \c{cfg@variable}{\1} } \l__cfg_tmp_tl
   \regex_replace_all:nnN { "([^"]+)" }
-    { \c{ebnf@terminal}{\1} } \l__cfg_tmp_tl
+    { \c{cfg@terminal}{\1} } \l__cfg_tmp_tl
   \regex_replace_all:nnN { \^^M\s*\| }
     { \^^M := } \l__cfg_tmp_tl
   \regex_replace_all:nnN { \| }
-    { \c{ebnf@or}{} } \l__cfg_tmp_tl
+    { \c{cfg@or}{} } \l__cfg_tmp_tl
   \regex_replace_all:nnN { \[([^\]]+)\] }
-    { \c{ebnf@optional}{\1} } \l__cfg_tmp_tl
+    { \c{cfg@optional}{\1} } \l__cfg_tmp_tl
   \regex_replace_all:nnN { \^^M\s*:= }
-    { \^^M \c{-}\c{hspace}{24pt} \c{ebnf@or}{} } \l__cfg_tmp_tl
+    { \^^M \c{-}\c{hspace}{24pt} \c{cfg@or}{} } \l__cfg_tmp_tl
   \regex_replace_all:nnN { := }
-    { \c{ebnf@to}{} } \l__cfg_tmp_tl
+    { \c{cfg@to}{} } \l__cfg_tmp_tl
   \regex_replace_all:nnN { \^^M }
-    { \c{ebnf@eol}{} } \l__cfg_tmp_tl
+    { \c{cfg@eol}{} } \l__cfg_tmp_tl
   \tl_put_left:Nn \l__cfg_tmp_tl {}
   \tl_put_right:Nn \l__cfg_tmp_tl {}
   \l__cfg_tmp_tl
