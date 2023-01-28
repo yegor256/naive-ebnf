@@ -18,7 +18,7 @@ jobs:
         with:
           update-all-packages: true
           package-file: DEPENDS.txt
-          packages: scheme-basic xetex libertine microtype hypdoc l3build href-ul newtx pgfopts filecontentsdef etoolbox
+          packages: scheme-basic xetex libertine microtype hypdoc l3build href-ul newtx pgfopts filecontentsdef etoolbox docshots
       - run: l3build ctan --show-log-on-error --halt-on-error || echo 1
       - run: cat build/doc/cfg.log
       - uses: JamesIves/github-pages-deploy-action@v4.4.1
