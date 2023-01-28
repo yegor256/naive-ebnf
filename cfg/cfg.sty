@@ -1,0 +1,111 @@
+%%
+%% This is file `cfg.sty',
+%% generated with the docstrip utility.
+%%
+%% The original source files were:
+%%
+%% cfg.dtx  (with options: `package')
+%% (The MIT License)
+%% 
+%% Copyright (c) 2023 Yegor Bugayenko
+%% 
+%% Permission is hereby granted, free of charge, to any person obtaining a copy
+%% of this software and associated documentation files (the 'Software'), to deal
+%% in the Software without restriction, including without limitation the rights
+%% to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+%% copies of the Software, and to permit persons to whom the Software is
+%% furnished to do so, subject to the following conditions:
+%% 
+%% The above copyright notice and this permission notice shall be included in all
+%% copies or substantial portions of the Software.
+%% 
+%% THE SOFTWARE IS PROVIDED 'AS IS', WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+%% IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+%% FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+%% AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+%% LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+%% OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+%% SOFTWARE.
+
+
+
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{cfg}
+[0000-00-00 0.0.0 Context Free Grammars in EBNF]
+
+
+
+
+
+
+
+
+\RequirePackage{pgfopts}
+\pgfkeys{
+  /cfg/.cd,
+  tmpdir/.store in=\cfg@bw,
+}
+\ProcessPgfPackageOptions{/cfg}
+
+\RequirePackage{filecontentsdef}
+\RequirePackage{expl3}
+
+\makeatletter\ifdefined\cfg@bw\else
+  \RequirePackage{xcolor}
+\fi
+\newcommand\cfg@color[2]{\ifdefined\cfg@bw#2\else\textcolor{#1}{#2}\fi}
+\makeatother
+
+\makeatletter
+\newcommand\ebnf@optional[1]
+  {\cfg@color{gray}{[} #1 \cfg@color{gray}{]}}
+\newcommand\ebnf@multi[1]
+  {\cfg@color{gray}{\{} #1 \cfg@color{gray}{\}}}
+\newcommand\ebnf@variable[1]
+  {{\sffamily$\langle$#1$\rangle$}}
+\ExplSyntaxOn
+\newcommand\ebnf@terminal[1]{
+  \tl_set:Nn \l_cfg_tl { }
+  \tl_set_rescan:Nno \l_cfg_tl { } { #1 }
+  {\ttfamily\cfg@color{gray}{"}{\l_cfg_tl}\cfg@color{gray}{"}}
+}
+\ExplSyntaxOff
+\newcommand\ebnf@to
+  {\cfg@color{gray}{\(\to\)}}
+\newcommand\ebnf@or
+  {\cfg@color{gray}{\(\vert\)}}
+\newcommand\ebnf@eol{\\}
+\makeatother
+
+\ExplSyntaxOn
+\cs_generate_variant:Nn \tl_replace_all:Nnn {Nx}
+\NewDocumentEnvironment{cfg}{}{\filecontentsdefmacro\l__cfg_tmp_tl}{
+  \endfilecontentsdefmacro
+  \str_set:NV \l__cfg_tmp_tl \l__cfg_tmp_tl
+  \regex_replace_all:nnN { \{(.+)\} }
+    { \c{ebnf@multi}{\1} } \l__cfg_tmp_tl
+  \regex_replace_all:nnN { <([A-Z][a-z]+)> }
+    { \c{ebnf@variable}{\1} } \l__cfg_tmp_tl
+  \regex_replace_all:nnN { "([^"]+)" }
+    { \c{ebnf@terminal}{\1} } \l__cfg_tmp_tl
+  \regex_replace_all:nnN { \^^M\s*\| }
+    { \^^M := } \l__cfg_tmp_tl
+  \regex_replace_all:nnN { \| }
+    { \c{ebnf@or}{} } \l__cfg_tmp_tl
+  \regex_replace_all:nnN { \[([^\]]+)\] }
+    { \c{ebnf@optional}{\1} } \l__cfg_tmp_tl
+  \regex_replace_all:nnN { \^^M\s*:= }
+    { \^^M \c{-}\c{hspace}{24pt} \c{ebnf@or}{} } \l__cfg_tmp_tl
+  \regex_replace_all:nnN { := }
+    { \c{ebnf@to}{} } \l__cfg_tmp_tl
+  \regex_replace_all:nnN { \^^M }
+    { \c{ebnf@eol}{} } \l__cfg_tmp_tl
+  \tl_put_left:Nn \l__cfg_tmp_tl {}
+  \tl_put_right:Nn \l__cfg_tmp_tl {}
+  \l__cfg_tmp_tl
+}
+\ExplSyntaxOff
+
+\endinput
+%%
+%% End of file `cfg.sty'.
