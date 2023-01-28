@@ -84,7 +84,7 @@
   \str_set:NV \l__cfg_tmp_tl \l__cfg_tmp_tl
   \regex_replace_all:nnN { \{(.+)\} }
     { \c{cfg@multi}{\1} } \l__cfg_tmp_tl
-  \regex_replace_all:nnN { <([A-Z][a-z]+)> }
+  \regex_replace_all:nnN { <([A-Za-z][a-z-]+)> }
     { \c{cfg@variable}{\1} } \l__cfg_tmp_tl
   \regex_replace_all:nnN { "([^"]+)" }
     { \c{cfg@terminal}{\1} } \l__cfg_tmp_tl
