@@ -10,7 +10,7 @@ First, [install it](https://en.wikibooks.org/wiki/LaTeX/Installing_Extra_Package
 from [CTAN](https://ctan.org/pkg/cfg)
 and then use in the preamble:
 
-```tex
+```text
 \documentclass{article}
 \usepackage{cfg}
 \begin{document}
