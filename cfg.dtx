@@ -1,0 +1,226 @@
+% \iffalse meta-comment
+% (The MIT License)
+%
+% Copyright (c) 2023 Yegor Bugayenko
+%
+% Permission is hereby granted, free of charge, to any person obtaining a copy
+% of this software and associated documentation files (the 'Software'), to deal
+% in the Software without restriction, including without limitation the rights
+% to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+% copies of the Software, and to permit persons to whom the Software is
+% furnished to do so, subject to the following conditions:
+%
+% The above copyright notice and this permission notice shall be included in all
+% copies or substantial portions of the Software.
+%
+% THE SOFTWARE IS PROVIDED 'AS IS', WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+% IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+% FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+% AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+% LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+% OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+% SOFTWARE.
+% \fi
+
+% \CheckSum{0}
+%
+% \CharacterTable
+%  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
+%   Lower-case    \a\b\c\d\e\f\g\h\i\j\k\l\m\n\o\p\q\r\s\t\u\v\w\x\y\z
+%   Digits        \0\1\2\3\4\5\6\7\8\9
+%   Exclamation   \!     Double quote  \"     Hash (number) \#
+%   Dollar        \$     Percent       \%     Ampersand     \&
+%   Acute accent  \'     Left paren    \(     Right paren   \)
+%   Asterisk      \*     Plus          \+     Comma         \,
+%   Minus         \-     Point         \.     Solidus       \/
+%   Colon         \:     Semicolon     \;     Less than     \<
+%   Equals        \=     Greater than  \>     Question mark \?
+%   Commercial at \@     Left bracket  \[     Backslash     \\
+%   Right bracket \]     Circumflex    \^     Underscore    \_
+%   Grave accent  \`     Left brace    \{     Vertical bar  \|
+%   Right brace   \}     Tilde         \~}
+
+% \GetFileInfo{cfg.dtx}
+% \DoNotIndex{\endgroup,\begingroup,\let,\else,\s,\n,\r,\\,\1,\fi}
+
+% \iffalse
+%<*driver>
+\ProvidesFile{cfg.dtx}
+%</driver>
+%<package>\NeedsTeXFormat{LaTeX2e}
+%<package>\ProvidesPackage{cfg}
+%<*package>
+[0000-00-00 0.0.0 Context Free Grammars in EBNF]
+%</package>
+%<*driver>
+\documentclass{ltxdoc}
+\usepackage[T1]{fontenc}
+\usepackage[maxnames=1,minnames=1,maxbibnames=1,natbib=true,citestyle=authoryear,bibstyle=authoryear,doi=false,url=false,isbn=false,isbn=false]{biblatex}
+\usepackage[tt=false, type1=true]{libertine}
+\usepackage{microtype}
+\AddToHook{env/verbatim/begin}{\microtypesetup{protrusion=false}}
+\usepackage{href-ul}
+\usepackage{xcolor}
+\usepackage[dtx]{docshots}
+\PageIndex
+\EnableCrossrefs
+\CodelineIndex
+\RecordChanges
+\begin{document}
+  \DocInput{cfg.dtx}
+  \PrintChanges
+  \PrintIndex
+\end{document}
+%</driver>
+% \fi
+
+% \title{|cfg|: \LaTeX{} Package \\ for Context Free Grammars in EBNF\thanks{The sources are in GitHub at \href{https://github.com/yegor256/cfg}{yegor256/cfg}}}
+% \author{Yegor Bugayenko \\ \texttt{yegor256@gmail.com}}
+% \date{\filedate, \fileversion}
+%
+% \maketitle
+%
+% \section{Introduction}
+%
+% This package lets you print a
+\href{https://en.wikipedia.org/wiki/Context-free_grammar}{Context-Free Grammar} (CFG)
+in \href{https://en.wikipedia.org/wiki/Extended_Backus%E2%80%93Naur_form}{Extended Backus-Naur Form}:
+% \begin{docshot}
+% \documentclass{minimal}
+% \usepackage{cfg}
+% \begin{document}
+% \begin{cfg}
+% <Expr> := <Var>
+%   | "$\lambda$" <Var> "." <Expr>
+%   | "(" <Expr> <Expr> ")"
+% \end{cfg}
+% \end{document}
+% \end{docshot}
+
+% The following syntax is understood inside the |cfg| environment:
+% \begin{itemize}
+% \item |:=| separates the left-hand side from the right-hand side of the production rule;
+% \item |<...>| denotes a non-terminal (variable);
+% \item |"..."| denotes a terminal symbol;
+% \item \texttt{( ... $\vert$ ... )} denotes a series of options to choose from;
+% \item |[ ... ]| denotes an optional substitution;
+% \item |{ ... }| denotes a zero or more times repetition;
+% \end{itemize}
+
+% \section{Package Options}
+
+% It's possible to configure the behavior of the package with the help of a few package options:
+
+% \DescribeMacro{bw}
+% By default, some colors are used in the rendered grammar. However, the |bw| package option disables any colors and makes sure the gammar is black-and-white:
+%\iffalse
+%<*verb>
+%\fi
+\begin{verbatim}
+\usepackage[bw]{cfg}
+\end{verbatim}
+%\iffalse
+%</verb>
+%\fi
+
+% \StopEventually{}
+
+% \section{Implementation}
+% \changes{0.0.1}{2023/01/28}{First draft.}
+
+% First, we process package options:
+%    \begin{macrocode}
+\RequirePackage{pgfopts}
+\pgfkeys{
+  /cfg/.cd,
+  tmpdir/.store in=\cfg@bw,
+}
+\ProcessPgfPackageOptions{/cfg}
+%    \end{macrocode}
+
+% Then, we include a few packages.
+%    \begin{macrocode}
+\RequirePackage{filecontentsdef}
+\RequirePackage{expl3}
+%    \end{macrocode}
+
+% Then, we include |xcolor| to colorize the output a bit:
+%    \begin{macrocode}
+\makeatletter\ifdefined\cfg@bw\else
+  \RequirePackage{xcolor}
+\fi
+\newcommand\cfg@color[2]{\ifdefined\cfg@bw#2\else\textcolor{#1}{#2}\fi}
+\makeatother
+%    \end{macrocode}
+
+% Then, we process package options:
+%    \begin{macrocode}
+\makeatletter
+\newcommand\ebnf@optional[1]
+  {\cfg@color{gray}{[} #1 \cfg@color{gray}{]}}
+\newcommand\ebnf@multi[1]
+  {\cfg@color{gray}{\{} #1 \cfg@color{gray}{\}}}
+\newcommand\ebnf@variable[1]
+  {{\sffamily$\langle$#1$\rangle$}}
+\ExplSyntaxOn
+\newcommand\ebnf@terminal[1]{
+  \tl_set:Nn \l_cfg_tl { }
+  \tl_set_rescan:Nno \l_cfg_tl { } { #1 }
+  {\ttfamily\cfg@color{gray}{"}{\l_cfg_tl}\cfg@color{gray}{"}}
+}
+\ExplSyntaxOff
+\newcommand\ebnf@to
+  {\cfg@color{gray}{\(\to\)}}
+\newcommand\ebnf@or
+  {\cfg@color{gray}{\(\vert\)}}
+\newcommand\ebnf@eol{\\}
+\makeatother
+%    \end{macrocode}
+
+% \begin{macro}{cfg}
+% Then, we define the |cfg| environment:
+%    \begin{macrocode}
+\ExplSyntaxOn
+\cs_generate_variant:Nn \tl_replace_all:Nnn {Nx}
+\NewDocumentEnvironment{cfg}{}{\filecontentsdefmacro\l__cfg_tmp_tl}{
+  \endfilecontentsdefmacro
+  \str_set:NV \l__cfg_tmp_tl \l__cfg_tmp_tl
+  \regex_replace_all:nnN { \{(.+)\} }
+    { \c{ebnf@multi}{\1} } \l__cfg_tmp_tl
+  \regex_replace_all:nnN { <([A-Z][a-z]+)> }
+    { \c{ebnf@variable}{\1} } \l__cfg_tmp_tl
+  \regex_replace_all:nnN { "([^"]+)" }
+    { \c{ebnf@terminal}{\1} } \l__cfg_tmp_tl
+  \regex_replace_all:nnN { \^^M\s*\| }
+    { \^^M := } \l__cfg_tmp_tl
+  \regex_replace_all:nnN { \| }
+    { \c{ebnf@or}{} } \l__cfg_tmp_tl
+  \regex_replace_all:nnN { \[([^\]]+)\] }
+    { \c{ebnf@optional}{\1} } \l__cfg_tmp_tl
+  \regex_replace_all:nnN { \^^M\s*:= }
+    { \^^M \c{-}\c{hspace}{24pt} \c{ebnf@or}{} } \l__cfg_tmp_tl
+  \regex_replace_all:nnN { := }
+    { \c{ebnf@to}{} } \l__cfg_tmp_tl
+  \regex_replace_all:nnN { \^^M }
+    { \c{ebnf@eol}{} } \l__cfg_tmp_tl
+  \tl_put_left:Nn \l__cfg_tmp_tl {}
+  \tl_put_right:Nn \l__cfg_tmp_tl {}
+  \l__cfg_tmp_tl
+}
+\ExplSyntaxOff
+%    \end{macrocode}
+% \end{macro}
+
+%    \begin{macrocode}
+\endinput
+%    \end{macrocode}
+
+% \Finale
+
+% \clearpage
+% \printbibliography
+% \clearpage
+
+% \PrintChanges
+% \clearpage
+% \PrintIndex
