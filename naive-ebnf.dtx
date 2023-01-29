@@ -242,25 +242,25 @@
   \str_set:NV \l__ebnf_tmp_tl \l__ebnf_tmp_tl
   \str_set:Nx \l__ebnf_tmp_tl {\str_range:Nnn \l__ebnf_tmp_tl {1} {-2}}
   \regex_replace_all:nnN { \{(.+?)\} }
-    { \c{ebnf@repetition}{\1} } \l__ebnf_tmp_tl
+    {\c{ebnf@repetition}{\1}} \l__ebnf_tmp_tl
   \regex_replace_all:nnN { \((.+?)\) }
-    { \c{ebnf@grouping}{\1} } \l__ebnf_tmp_tl
+    {\c{ebnf@grouping}{\1}} \l__ebnf_tmp_tl
   \regex_replace_all:nnN { \[([^\]]+?)\] }
-    { \c{ebnf@optional}{\1} } \l__ebnf_tmp_tl
+    {\c{ebnf@optional}{\1}} \l__ebnf_tmp_tl
   \regex_replace_all:nnN { <([A-Za-z][a-z-]+)> }
-    { \c{nonterminal}{\1} } \l__ebnf_tmp_tl
+    {\c{nonterminal}{\1}} \l__ebnf_tmp_tl
   \regex_replace_all:nnN { "([^"]+)" }
-    { \c{ebnf@terminal}{\1} } \l__ebnf_tmp_tl
+    {\c{ebnf@terminal}{\1}} \l__ebnf_tmp_tl
   \regex_replace_all:nnN { \^^M\s*\| }
-    { \^^M := } \l__ebnf_tmp_tl
+    {\^^M :=} \l__ebnf_tmp_tl
   \regex_replace_all:nnN { \| }
-    { \c{ebnf@alternation}{} } \l__ebnf_tmp_tl
+    {\c{ebnf@alternation}{}} \l__ebnf_tmp_tl
   \regex_replace_all:nnN { \^^M\s*:= }
-    { \^^M \c{-}\c{hspace}{3em} \c{ebnf@alternation}{} } \l__ebnf_tmp_tl
+    {\^^M \c{-}\c{hspace}{3em}\c{ebnf@alternation}{}} \l__ebnf_tmp_tl
   \regex_replace_all:nnN { := }
-    { \c{ebnf@to}{} } \l__ebnf_tmp_tl
+    {\c{ebnf@to}{}} \l__ebnf_tmp_tl
   \regex_replace_all:nnN { \^^M }
-    { \c{ebnf@eol}{} } \l__ebnf_tmp_tl
+    {\c{ebnf@eol}{}} \l__ebnf_tmp_tl
   \tl_put_left:Nn \l__ebnf_tmp_tl {}
   \tl_put_right:Nn \l__ebnf_tmp_tl {}
   \l__ebnf_tmp_tl
