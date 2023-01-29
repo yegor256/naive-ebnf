@@ -1,4 +1,4 @@
-[![l3build](https://github.com/yegor256/naive-ebnf/actions/workflows/l3build.yml/badge.svg)](https://github.com/yegor256/ebnf/actions/workflows/l3build.yml)
+[![l3build](https://github.com/yegor256/naive-ebnf/actions/workflows/l3build.yml/badge.svg)](https://github.com/yegor256/naive-ebnf/actions/workflows/l3build.yml)
 [![CTAN](https://img.shields.io/ctan/v/naive-ebnf)](https://ctan.org/pkg/naive-ebnf)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](https://github.com/yegor256/naive-ebnf/blob/master/LICENSE.txt)
 
