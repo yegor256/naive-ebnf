@@ -60,8 +60,9 @@
 \makeatother
 
 \makeatletter
-\newcommand\terminal[1]
-  {\relax\ifmmode\else\ttfamily\fi\ebnf@color{gray}{"}#1\ebnf@color{gray}{"}}
+\newcommand\terminal[1]{%
+  \relax\ifmmode\else\ttfamily\fi%
+  \ebnf@color{gray}{"}#1\ebnf@color{gray}{"}}
 \makeatother
 
 \makeatletter
