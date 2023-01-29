@@ -2,9 +2,9 @@
 [![CTAN](https://img.shields.io/ctan/v/naive-ebnf)](https://ctan.org/pkg/naive-ebnf)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](https://github.com/yegor256/naive-ebnf/blob/master/LICENSE.txt)
 
-This LaTeX package helps you typeset a
-[Context-Free Grammar](https://en.wikipedia.org/wiki/Context-free_grammar) (CFG)
-as [Extended Backus-Naur Form](https://en.wikipedia.org/wiki/Extended_Backus%E2%80%93Naur_form) (EBNF).
+This LaTeX package helps you typeset an
+[Extended Backus-Naur Form](https://en.wikipedia.org/wiki/Extended_Backus%E2%80%93Naur_form) (EBNF)
+using plain text format.
 
 First, [install it](https://en.wikibooks.org/wiki/LaTeX/Installing_Extra_Packages)
 from [CTAN](https://ctan.org/pkg/naive-ebnf)
