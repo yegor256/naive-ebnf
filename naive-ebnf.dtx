@@ -191,7 +191,7 @@
 %    \begin{macrocode}
 \makeatletter
 \newcommand\terminal[1]
-  {{\ttfamily\ebnf@color{gray}{"}{#1}\ebnf@color{gray}{"}}}
+  {\relax\ifmmode\else\ttfamily\fi\ebnf@color{gray}{"}#1\ebnf@color{gray}{"}}
 \makeatother
 %    \end{macrocode}
 % \end{macro}
