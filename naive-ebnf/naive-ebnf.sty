@@ -1,10 +1,10 @@
 %%
-%% This is file `cfg.sty',
+%% This is file `naive-ebnf.sty',
 %% generated with the docstrip utility.
 %%
 %% The original source files were:
 %%
-%% cfg.dtx  (with options: `package')
+%% naive-ebnf.dtx  (with options: `package')
 %% (The MIT License)
 %% 
 %% Copyright (c) 2023 Yegor Bugayenko
@@ -30,8 +30,8 @@
 
 
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{cfg}
-[0000-00-00 0.0.0 Context Free Grammars in EBNF]
+\ProvidesPackage{naive-ebnf}
+[0000-00-00 0.0.0 EBNF in Plain Text]
 
 
 
@@ -42,70 +42,70 @@
 
 \RequirePackage{pgfopts}
 \pgfkeys{
-  /cfg/.cd,
-  tmpdir/.store in=\cfg@bw,
+  /ebnf/.cd,
+  tmpdir/.store in=\ebnf@bw,
 }
-\ProcessPgfPackageOptions{/cfg}
+\ProcessPgfPackageOptions{/ebnf}
 
 \RequirePackage{filecontentsdef}
 \RequirePackage{expl3}
 
-\makeatletter\ifdefined\cfg@bw\else
+\makeatletter\ifdefined\ebnf@bw\else
   \RequirePackage{xcolor}
 \fi
-\newcommand\cfg@color[2]{\ifdefined\cfg@bw#2\else\textcolor{#1}{#2}\fi}
+\newcommand\ebnf@color[2]{\ifdefined\ebnf@bw#2\else\textcolor{#1}{#2}\fi}
 \makeatother
 
 \makeatletter
-\newcommand\cfg@optional[1]
-  {\cfg@color{gray}{[} #1 \cfg@color{gray}{]}}
-\newcommand\cfg@repetition[1]
-  {\cfg@color{gray}{\{} #1 \cfg@color{gray}{\}}}
-\newcommand\cfg@variable[1]
+\newcommand\ebnf@optional[1]
+  {\ebnf@color{gray}{[} #1 \ebnf@color{gray}{]}}
+\newcommand\ebnf@repetition[1]
+  {\ebnf@color{gray}{\{} #1 \ebnf@color{gray}{\}}}
+\newcommand\ebnf@variable[1]
   {{\sffamily$\langle$#1$\rangle$}}
 \ExplSyntaxOn
-\newcommand\cfg@terminal[1]{
-  \tl_set:Nn \l_cfg_tl { }
-  \tl_set_rescan:Nno \l_cfg_tl { } { #1 }
-  {\ttfamily\cfg@color{gray}{"}{\l_cfg_tl}\cfg@color{gray}{"}}
+\newcommand\ebnf@terminal[1]{
+  \tl_set:Nn \l_ebnf_tl { }
+  \tl_set_rescan:Nno \l_ebnf_tl { } { #1 }
+  {\ttfamily\ebnf@color{gray}{"}{\l_ebnf_tl}\ebnf@color{gray}{"}}
 }
 \ExplSyntaxOff
-\newcommand\cfg@to
-  {\cfg@color{gray}{\(\to\)}}
-\newcommand\cfg@alternation
-  {\cfg@color{gray}{\(\vert\)}}
-\newcommand\cfg@eol{\\}
+\newcommand\ebnf@to
+  {\ebnf@color{gray}{\(\to\)}}
+\newcommand\ebnf@alternation
+  {\ebnf@color{gray}{\(\vert\)}}
+\newcommand\ebnf@eol{\\}
 \makeatother
 
 \ExplSyntaxOn
 \cs_generate_variant:Nn \tl_replace_all:Nnn {Nx}
-\NewDocumentEnvironment{cfg}{}{\filecontentsdefmacro\l__cfg_tmp_tl}{
+\NewDocumentEnvironment{ebnf}{}{\filecontentsdefmacro\l__ebnf_tmp_tl}{
   \endfilecontentsdefmacro
-  \str_set:NV \l__cfg_tmp_tl \l__cfg_tmp_tl
+  \str_set:NV \l__ebnf_tmp_tl \l__ebnf_tmp_tl
   \regex_replace_all:nnN { \{(.+)\} }
-    { \c{cfg@repetition}{\1} } \l__cfg_tmp_tl
+    { \c{ebnf@repetition}{\1} } \l__ebnf_tmp_tl
   \regex_replace_all:nnN { <([A-Za-z][a-z-]+)> }
-    { \c{cfg@variable}{\1} } \l__cfg_tmp_tl
+    { \c{ebnf@variable}{\1} } \l__ebnf_tmp_tl
   \regex_replace_all:nnN { "([^"]+)" }
-    { \c{cfg@terminal}{\1} } \l__cfg_tmp_tl
+    { \c{ebnf@terminal}{\1} } \l__ebnf_tmp_tl
   \regex_replace_all:nnN { \^^M\s*\| }
-    { \^^M := } \l__cfg_tmp_tl
+    { \^^M := } \l__ebnf_tmp_tl
   \regex_replace_all:nnN { \| }
-    { \c{cfg@alternation}{} } \l__cfg_tmp_tl
+    { \c{ebnf@alternation}{} } \l__ebnf_tmp_tl
   \regex_replace_all:nnN { \[([^\]]+)\] }
-    { \c{cfg@optional}{\1} } \l__cfg_tmp_tl
+    { \c{ebnf@optional}{\1} } \l__ebnf_tmp_tl
   \regex_replace_all:nnN { \^^M\s*:= }
-    { \^^M \c{-}\c{hspace}{24pt} \c{cfg@alternation}{} } \l__cfg_tmp_tl
+    { \^^M \c{-}\c{hspace}{24pt} \c{ebnf@alternation}{} } \l__ebnf_tmp_tl
   \regex_replace_all:nnN { := }
-    { \c{cfg@to}{} } \l__cfg_tmp_tl
+    { \c{ebnf@to}{} } \l__ebnf_tmp_tl
   \regex_replace_all:nnN { \^^M }
-    { \c{cfg@eol}{} } \l__cfg_tmp_tl
-  \tl_put_left:Nn \l__cfg_tmp_tl {}
-  \tl_put_right:Nn \l__cfg_tmp_tl {}
-  \l__cfg_tmp_tl
+    { \c{ebnf@eol}{} } \l__ebnf_tmp_tl
+  \tl_put_left:Nn \l__ebnf_tmp_tl {}
+  \tl_put_right:Nn \l__ebnf_tmp_tl {}
+  \l__ebnf_tmp_tl
 }
 \ExplSyntaxOff
 
 \endinput
 %%
-%% End of file `cfg.sty'.
+%% End of file `naive-ebnf.sty'.
