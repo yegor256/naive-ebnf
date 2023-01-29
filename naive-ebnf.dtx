@@ -81,7 +81,7 @@
 %
 % \section{Introduction}
 %
-% This package lets you print a
+% This package helps to render a
 % \href{https://en.wikipedia.org/wiki/Context-free_grammar}{Context-Free Grammar} (CFG)
 % in \href{https://en.wikipedia.org/wiki/Extended_Backus%E2%80%93Naur_form}{Extended Backus-Naur Form}
 % using plain text notation:
@@ -106,6 +106,23 @@
 % \item |[ ... ]| denotes an optional substitution;
 % \item |{ ... }| denotes a zero or more times repetition;
 % \end{itemize}
+
+% \DescribeMacro{\terminal}
+% \DescribeMacro{\nonterminal}
+% Inside the text, terminals and non-terminals may be formatted using two supplementary commands:
+% \docshotOptions{firstline=5,lastline=10}
+% \begin{docshot}
+% \documentclass{article}
+% \pagestyle{empty}
+% \usepackage[paperwidth=3in]{geometry}
+% \usepackage{naive-ebnf}
+% \begin{document}
+% The non-terminal \nonterminal{Var}
+% in $\lambda$-calculus may be equal
+% to $v_1, v_2, \dots$. Application
+% starts with \terminal{)}.
+% \end{document}
+% \end{docshot}
 
 % \section{Package Options}
 
@@ -144,29 +161,52 @@
 \RequirePackage{expl3}
 %    \end{macrocode}
 
+% \begin{macro}{\ebnf@color}
 % Then, we include |xcolor| to colorize the output a bit:
 %    \begin{macrocode}
 \makeatletter\ifdefined\ebnf@bw\else
   \RequirePackage{xcolor}
 \fi
-\newcommand\ebnf@color[2]{\ifdefined\ebnf@bw#2\else\textcolor{#1}{#2}\fi}
+\newcommand\ebnf@color[2]
+  {\ifdefined\ebnf@bw#2\else\textcolor{#1}{#2}\fi}
 \makeatother
 %    \end{macrocode}
+% \end{macro}
 
-% Then, we process package options:
+% \begin{macro}{\terminal}
+% \changes{0.0.2}{2023/01/29}{New command \texttt{\char`\\terminal} added, to enable rendering terminal symbols outside of the \texttt{ebnf} environment.}
+% Then, we a command to render a single terminal:
+%    \begin{macrocode}
+\makeatletter
+\newcommand\terminal[1]
+  {{\ttfamily\ebnf@color{gray}{"}{#1}\ebnf@color{gray}{"}}}
+\makeatother
+%    \end{macrocode}
+% \end{macro}
+
+% \begin{macro}{\nonterminal}
+% \changes{0.0.2}{2023/01/29}{New command \texttt{\char`\\nonterminal} added, to enable rendering non-terminal symbols outside of the \texttt{ebnf} environment.}
+% Then, we a command to render a single non-terminal:
+%    \begin{macrocode}
+\makeatletter
+\newcommand\nonterminal[1]
+  {\(\ebnf@color{gray}{\langle}\textsf{#1}\ebnf@color{gray}{\rangle}\)}
+\makeatother
+%    \end{macrocode}
+% \end{macro}
+
+% Then, we define supplementary commands:
 %    \begin{macrocode}
 \makeatletter
 \newcommand\ebnf@optional[1]
   {\ebnf@color{gray}{[} #1 \ebnf@color{gray}{]}}
 \newcommand\ebnf@repetition[1]
   {\ebnf@color{gray}{\{} #1 \ebnf@color{gray}{\}}}
-\newcommand\ebnf@variable[1]
-  {{\sffamily$\langle$#1$\rangle$}}
 \ExplSyntaxOn
 \newcommand\ebnf@terminal[1]{
   \tl_set:Nn \l_ebnf_tl { }
   \tl_set_rescan:Nno \l_ebnf_tl { } { #1 }
-  {\ttfamily\ebnf@color{gray}{"}{\l_ebnf_tl}\ebnf@color{gray}{"}}
+  \terminal{\l_ebnf_tl}
 }
 \ExplSyntaxOff
 \newcommand\ebnf@to
@@ -188,7 +228,7 @@
   \regex_replace_all:nnN { \{(.+)\} }
     { \c{ebnf@repetition}{\1} } \l__ebnf_tmp_tl
   \regex_replace_all:nnN { <([A-Za-z][a-z-]+)> }
-    { \c{ebnf@variable}{\1} } \l__ebnf_tmp_tl
+    { \c{nonterminal}{\1} } \l__ebnf_tmp_tl
   \regex_replace_all:nnN { "([^"]+)" }
     { \c{ebnf@terminal}{\1} } \l__ebnf_tmp_tl
   \regex_replace_all:nnN { \^^M\s*\| }
@@ -198,7 +238,7 @@
   \regex_replace_all:nnN { \[([^\]]+)\] }
     { \c{ebnf@optional}{\1} } \l__ebnf_tmp_tl
   \regex_replace_all:nnN { \^^M\s*:= }
-    { \^^M \c{-}\c{hspace}{24pt} \c{ebnf@alternation}{} } \l__ebnf_tmp_tl
+    { \^^M \c{-}\c{hspace}{4em} \c{ebnf@alternation}{} } \l__ebnf_tmp_tl
   \regex_replace_all:nnN { := }
     { \c{ebnf@to}{} } \l__ebnf_tmp_tl
   \regex_replace_all:nnN { \^^M }
