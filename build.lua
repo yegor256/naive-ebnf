@@ -25,10 +25,10 @@ uploadconfig = {
   description = "EBNF in Plain Text",
   development = "",
   license = "mit",
-  summary = "With the help of this LaTeX package a context-free grammar (CFG) may be rendered in a plain-text mode using a simplified EBNF notation",
+  summary = "With the help of this LaTeX package EBNF may be rendered in a plain text",
   repository = "https://github.com/yegor256/naive-ebnf",
   support = "",
-  topic = {""}
+  topic = {"formal-spec"}
 }
 
 function update_tag(file, content, tagname, tagdate)
