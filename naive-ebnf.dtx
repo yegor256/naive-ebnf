@@ -190,8 +190,9 @@
 % Then, we a command to render a single terminal:
 %    \begin{macrocode}
 \makeatletter
-\newcommand\terminal[1]
-  {\relax\ifmmode\else\ttfamily\fi\ebnf@color{gray}{"}#1\ebnf@color{gray}{"}}
+\newcommand\terminal[1]{%
+  \relax\ifmmode\else\ttfamily\fi%
+  \ebnf@color{gray}{"}#1\ebnf@color{gray}{"}}
 \makeatother
 %    \end{macrocode}
 % \end{macro}
