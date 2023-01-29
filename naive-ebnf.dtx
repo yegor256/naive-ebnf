@@ -109,10 +109,10 @@
 
 % \textbf{Attention}: The usage of some symbols is prohibited inside terminals. Instead, the following substitutions are recommended:
 % \begin{itemize}
-% \item |\lparen| and |\rparen| instead of ``|(|'' and ``|)|'' (from the |mathtools| package);
+% \item |\lparen| and |\rparen| instead of ``|(|'' and ``|)|'' (from the \href{https://ctan.org/pkg/mathtools}{mathtools} package);
 % \item |\langle| and |\rangle| instead of ``|<|'' and ``|>|'';
-% \item |\lbrace| and |\rbrace| instead of ``|{|'' and ``|}|'' (from the |mathtools| package);
-% \item |\lbrack| and |\rbrack| instead of ``|[|'' and ``|]|'' (from the |mathtools| package);
+% \item |\lbrace| and |\rbrace| instead of ``|{|'' and ``|}|'' (also |mathtools|);
+% \item |\lbrack| and |\rbrack| instead of ``|[|'' and ``|]|'' (also |mathtools|);
 % \item |\vert| instead of ``\texttt{\char`\|}''.
 % \end{itemize}
 
@@ -167,14 +167,14 @@
 \ProcessPgfPackageOptions{/ebnf}
 %    \end{macrocode}
 
-% Then, we include a few packages.
+% Then, we include a few packages, mostly to deal with \LaTeX{}3 expressions:
 %    \begin{macrocode}
 \RequirePackage{filecontentsdef}
 \RequirePackage{expl3}
 %    \end{macrocode}
 
 % \begin{macro}{\ebnf@color}
-% Then, we include |xcolor| to colorize the output a bit:
+% Then, we include \href{https://ctan.org/pkg/xcolor}{xcolor} to colorize the output a bit:
 %    \begin{macrocode}
 \makeatletter\ifdefined\ebnf@bw\else
   \RequirePackage{xcolor}
