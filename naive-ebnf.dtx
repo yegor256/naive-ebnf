@@ -102,7 +102,7 @@
 % \item |:=| separates the left-hand side from the right-hand side of the production rule;
 % \item |<...>| denotes a non-terminal (variable);
 % \item |"..."| denotes a terminal symbol;
-% \item \texttt{( ... $\vert$ ... )} denotes a series of options to choose from;
+% \item \texttt{( ... \char`\| ... )} denotes a series of options to choose from;
 % \item |[ ... ]| denotes an optional substitution;
 % \item |{ ... }| denotes a zero or more times repetition;
 % \end{itemize}
@@ -153,6 +153,8 @@
 
 % \section{Implementation}
 % \changes{0.0.1}{2023/01/28}{First draft.}
+% \changes{0.0.2}{2023/01/29}{Proper parsing of grouping.}
+% \changes{0.0.2}{2023/01/29}{Substitutions suggested for special symbols.}
 
 % First, we process package options:
 %    \begin{macrocode}
