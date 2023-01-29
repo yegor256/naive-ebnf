@@ -87,11 +87,12 @@
 % \begin{docshot}
 % \documentclass{minimal}
 % \usepackage{naive-ebnf}
+% \usepackage{mathtools}
 % \begin{document}
 % \begin{ebnf}
 % <Expr> := <Var>
 %   | "$\lambda$" <Var> "." <Expr>
-%   | "(" <Expr> <Expr> ")"
+%   | "$\lparen$" <Expr> <Expr> "$\rparen$"
 % \end{ebnf}
 % \end{document}
 % \end{docshot}
@@ -201,6 +202,8 @@
   {\ebnf@color{gray}{[} #1 \ebnf@color{gray}{]}}
 \newcommand\ebnf@repetition[1]
   {\ebnf@color{gray}{\{} #1 \ebnf@color{gray}{\}}}
+\newcommand\ebnf@grouping[1]
+  {\ebnf@color{gray}{(} #1 \ebnf@color{gray}{)}}
 \ExplSyntaxOn
 \newcommand\ebnf@terminal[1]{
   \tl_set:Nn \l_ebnf_tl { }
@@ -226,6 +229,8 @@
   \str_set:NV \l__ebnf_tmp_tl \l__ebnf_tmp_tl
   \regex_replace_all:nnN { \{(.+)\} }
     { \c{ebnf@repetition}{\1} } \l__ebnf_tmp_tl
+  \regex_replace_all:nnN { \((.+)\) }
+    { \c{ebnf@grouping}{\1} } \l__ebnf_tmp_tl
   \regex_replace_all:nnN { <([A-Za-z][a-z-]+)> }
     { \c{nonterminal}{\1} } \l__ebnf_tmp_tl
   \regex_replace_all:nnN { "([^"]+)" }
