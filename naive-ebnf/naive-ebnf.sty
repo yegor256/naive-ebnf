@@ -40,6 +40,7 @@
 
 
 
+
 \RequirePackage{pgfopts}
 \pgfkeys{
   /ebnf/.cd,
@@ -53,7 +54,18 @@
 \makeatletter\ifdefined\ebnf@bw\else
   \RequirePackage{xcolor}
 \fi
-\newcommand\ebnf@color[2]{\ifdefined\ebnf@bw#2\else\textcolor{#1}{#2}\fi}
+\newcommand\ebnf@color[2]
+  {\ifdefined\ebnf@bw#2\else\textcolor{#1}{#2}\fi}
+\makeatother
+
+\makeatletter
+\newcommand\terminal[1]
+  {{\ttfamily\ebnf@color{gray}{"}{#1}\ebnf@color{gray}{"}}}
+\makeatother
+
+\makeatletter
+\newcommand\nonterminal[1]
+  {\(\ebnf@color{gray}{\langle}\textsf{#1}\ebnf@color{gray}{\rangle}\)}
 \makeatother
 
 \makeatletter
@@ -61,13 +73,11 @@
   {\ebnf@color{gray}{[} #1 \ebnf@color{gray}{]}}
 \newcommand\ebnf@repetition[1]
   {\ebnf@color{gray}{\{} #1 \ebnf@color{gray}{\}}}
-\newcommand\ebnf@variable[1]
-  {{\sffamily$\langle$#1$\rangle$}}
 \ExplSyntaxOn
 \newcommand\ebnf@terminal[1]{
   \tl_set:Nn \l_ebnf_tl { }
   \tl_set_rescan:Nno \l_ebnf_tl { } { #1 }
-  {\ttfamily\ebnf@color{gray}{"}{\l_ebnf_tl}\ebnf@color{gray}{"}}
+  \terminal{\l_ebnf_tl}
 }
 \ExplSyntaxOff
 \newcommand\ebnf@to
@@ -85,7 +95,7 @@
   \regex_replace_all:nnN { \{(.+)\} }
     { \c{ebnf@repetition}{\1} } \l__ebnf_tmp_tl
   \regex_replace_all:nnN { <([A-Za-z][a-z-]+)> }
-    { \c{ebnf@variable}{\1} } \l__ebnf_tmp_tl
+    { \c{nonterminal}{\1} } \l__ebnf_tmp_tl
   \regex_replace_all:nnN { "([^"]+)" }
     { \c{ebnf@terminal}{\1} } \l__ebnf_tmp_tl
   \regex_replace_all:nnN { \^^M\s*\| }
@@ -95,7 +105,7 @@
   \regex_replace_all:nnN { \[([^\]]+)\] }
     { \c{ebnf@optional}{\1} } \l__ebnf_tmp_tl
   \regex_replace_all:nnN { \^^M\s*:= }
-    { \^^M \c{-}\c{hspace}{24pt} \c{ebnf@alternation}{} } \l__ebnf_tmp_tl
+    { \^^M \c{-}\c{hspace}{4em} \c{ebnf@alternation}{} } \l__ebnf_tmp_tl
   \regex_replace_all:nnN { := }
     { \c{ebnf@to}{} } \l__ebnf_tmp_tl
   \regex_replace_all:nnN { \^^M }
