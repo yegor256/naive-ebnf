@@ -40,17 +40,17 @@
 %   Grave accent  \`     Left brace    \{     Vertical bar  \|
 %   Right brace   \}     Tilde         \~}
 
-% \GetFileInfo{cfg.dtx}
+% \GetFileInfo{naive-ebnf.dtx}
 % \DoNotIndex{\endgroup,\begingroup,\let,\else,\s,\n,\r,\\,\1,\fi}
 
 % \iffalse
 %<*driver>
-\ProvidesFile{cfg.dtx}
+\ProvidesFile{naive-ebnf.dtx}
 %</driver>
 %<package>\NeedsTeXFormat{LaTeX2e}
-%<package>\ProvidesPackage{cfg}
+%<package>\ProvidesPackage{naive-ebnf}
 %<*package>
-[0000-00-00 0.0.0 Context Free Grammars in EBNF]
+[0000-00-00 0.0.0 EBNF in Plain Text]
 %</package>
 %<*driver>
 \documentclass{ltxdoc}
@@ -66,14 +66,14 @@
 \CodelineIndex
 \RecordChanges
 \begin{document}
-  \DocInput{cfg.dtx}
+  \DocInput{naive-ebnf.dtx}
   \PrintChanges
   \PrintIndex
 \end{document}
 %</driver>
 % \fi
 
-% \title{|cfg|: \LaTeX{} Package \\ for Context Free Grammars in EBNF\thanks{The sources are in GitHub at \href{https://github.com/yegor256/cfg}{yegor256/cfg}}}
+% \title{|naive-ebnf|: \LaTeX{} Package \\ for EBNF in Plain Text\thanks{The sources are in GitHub at \href{https://github.com/yegor256/naive-ebnf}{yegor256/naive-ebnf}}}
 % \author{Yegor Bugayenko \\ \texttt{yegor256@gmail.com}}
 % \date{\filedate, \fileversion}
 %
@@ -83,20 +83,21 @@
 %
 % This package lets you print a
 % \href{https://en.wikipedia.org/wiki/Context-free_grammar}{Context-Free Grammar} (CFG)
-% in \href{https://en.wikipedia.org/wiki/Extended_Backus%E2%80%93Naur_form}{Extended Backus-Naur Form}:
+% in \href{https://en.wikipedia.org/wiki/Extended_Backus%E2%80%93Naur_form}{Extended Backus-Naur Form}
+% using plain text notation:
 % \begin{docshot}
 % \documentclass{minimal}
-% \usepackage{cfg}
+% \usepackage{naive-ebnf}
 % \begin{document}
-% \begin{cfg}
+% \begin{ebnf}
 % <Expr> := <Var>
 %   | "$\lambda$" <Var> "." <Expr>
 %   | "(" <Expr> <Expr> ")"
-% \end{cfg}
+% \end{ebnf}
 % \end{document}
 % \end{docshot}
 
-% The following syntax is understood inside the |cfg| environment:
+% The following syntax is understood inside the |ebnf| environment:
 % \begin{itemize}
 % \item |:=| separates the left-hand side from the right-hand side of the production rule;
 % \item |<...>| denotes a non-terminal (variable);
@@ -116,7 +117,7 @@
 %<*verb>
 %\fi
 \begin{verbatim}
-\usepackage[bw]{cfg}
+\usepackage[bw]{naive-ebnf}
 \end{verbatim}
 %\iffalse
 %</verb>
@@ -131,10 +132,10 @@
 %    \begin{macrocode}
 \RequirePackage{pgfopts}
 \pgfkeys{
-  /cfg/.cd,
-  tmpdir/.store in=\cfg@bw,
+  /ebnf/.cd,
+  tmpdir/.store in=\ebnf@bw,
 }
-\ProcessPgfPackageOptions{/cfg}
+\ProcessPgfPackageOptions{/ebnf}
 %    \end{macrocode}
 
 % Then, we include a few packages.
@@ -145,66 +146,66 @@
 
 % Then, we include |xcolor| to colorize the output a bit:
 %    \begin{macrocode}
-\makeatletter\ifdefined\cfg@bw\else
+\makeatletter\ifdefined\ebnf@bw\else
   \RequirePackage{xcolor}
 \fi
-\newcommand\cfg@color[2]{\ifdefined\cfg@bw#2\else\textcolor{#1}{#2}\fi}
+\newcommand\ebnf@color[2]{\ifdefined\ebnf@bw#2\else\textcolor{#1}{#2}\fi}
 \makeatother
 %    \end{macrocode}
 
 % Then, we process package options:
 %    \begin{macrocode}
 \makeatletter
-\newcommand\cfg@optional[1]
-  {\cfg@color{gray}{[} #1 \cfg@color{gray}{]}}
-\newcommand\cfg@repetition[1]
-  {\cfg@color{gray}{\{} #1 \cfg@color{gray}{\}}}
-\newcommand\cfg@variable[1]
+\newcommand\ebnf@optional[1]
+  {\ebnf@color{gray}{[} #1 \ebnf@color{gray}{]}}
+\newcommand\ebnf@repetition[1]
+  {\ebnf@color{gray}{\{} #1 \ebnf@color{gray}{\}}}
+\newcommand\ebnf@variable[1]
   {{\sffamily$\langle$#1$\rangle$}}
 \ExplSyntaxOn
-\newcommand\cfg@terminal[1]{
-  \tl_set:Nn \l_cfg_tl { }
-  \tl_set_rescan:Nno \l_cfg_tl { } { #1 }
-  {\ttfamily\cfg@color{gray}{"}{\l_cfg_tl}\cfg@color{gray}{"}}
+\newcommand\ebnf@terminal[1]{
+  \tl_set:Nn \l_ebnf_tl { }
+  \tl_set_rescan:Nno \l_ebnf_tl { } { #1 }
+  {\ttfamily\ebnf@color{gray}{"}{\l_ebnf_tl}\ebnf@color{gray}{"}}
 }
 \ExplSyntaxOff
-\newcommand\cfg@to
-  {\cfg@color{gray}{\(\to\)}}
-\newcommand\cfg@alternation
-  {\cfg@color{gray}{\(\vert\)}}
-\newcommand\cfg@eol{\\}
+\newcommand\ebnf@to
+  {\ebnf@color{gray}{\(\to\)}}
+\newcommand\ebnf@alternation
+  {\ebnf@color{gray}{\(\vert\)}}
+\newcommand\ebnf@eol{\\}
 \makeatother
 %    \end{macrocode}
 
-% \begin{macro}{cfg}
-% Then, we define the |cfg| environment:
+% \begin{macro}{ebnf}
+% Then, we define the |ebnf| environment:
 %    \begin{macrocode}
 \ExplSyntaxOn
 \cs_generate_variant:Nn \tl_replace_all:Nnn {Nx}
-\NewDocumentEnvironment{cfg}{}{\filecontentsdefmacro\l__cfg_tmp_tl}{
+\NewDocumentEnvironment{ebnf}{}{\filecontentsdefmacro\l__ebnf_tmp_tl}{
   \endfilecontentsdefmacro
-  \str_set:NV \l__cfg_tmp_tl \l__cfg_tmp_tl
+  \str_set:NV \l__ebnf_tmp_tl \l__ebnf_tmp_tl
   \regex_replace_all:nnN { \{(.+)\} }
-    { \c{cfg@repetition}{\1} } \l__cfg_tmp_tl
+    { \c{ebnf@repetition}{\1} } \l__ebnf_tmp_tl
   \regex_replace_all:nnN { <([A-Za-z][a-z-]+)> }
-    { \c{cfg@variable}{\1} } \l__cfg_tmp_tl
+    { \c{ebnf@variable}{\1} } \l__ebnf_tmp_tl
   \regex_replace_all:nnN { "([^"]+)" }
-    { \c{cfg@terminal}{\1} } \l__cfg_tmp_tl
+    { \c{ebnf@terminal}{\1} } \l__ebnf_tmp_tl
   \regex_replace_all:nnN { \^^M\s*\| }
-    { \^^M := } \l__cfg_tmp_tl
+    { \^^M := } \l__ebnf_tmp_tl
   \regex_replace_all:nnN { \| }
-    { \c{cfg@alternation}{} } \l__cfg_tmp_tl
+    { \c{ebnf@alternation}{} } \l__ebnf_tmp_tl
   \regex_replace_all:nnN { \[([^\]]+)\] }
-    { \c{cfg@optional}{\1} } \l__cfg_tmp_tl
+    { \c{ebnf@optional}{\1} } \l__ebnf_tmp_tl
   \regex_replace_all:nnN { \^^M\s*:= }
-    { \^^M \c{-}\c{hspace}{24pt} \c{cfg@alternation}{} } \l__cfg_tmp_tl
+    { \^^M \c{-}\c{hspace}{24pt} \c{ebnf@alternation}{} } \l__ebnf_tmp_tl
   \regex_replace_all:nnN { := }
-    { \c{cfg@to}{} } \l__cfg_tmp_tl
+    { \c{ebnf@to}{} } \l__ebnf_tmp_tl
   \regex_replace_all:nnN { \^^M }
-    { \c{cfg@eol}{} } \l__cfg_tmp_tl
-  \tl_put_left:Nn \l__cfg_tmp_tl {}
-  \tl_put_right:Nn \l__cfg_tmp_tl {}
-  \l__cfg_tmp_tl
+    { \c{ebnf@eol}{} } \l__ebnf_tmp_tl
+  \tl_put_left:Nn \l__ebnf_tmp_tl {}
+  \tl_put_right:Nn \l__ebnf_tmp_tl {}
+  \l__ebnf_tmp_tl
 }
 \ExplSyntaxOff
 %    \end{macrocode}

@@ -1,33 +1,32 @@
-module = "cfg"
+module = "naive-ebnf"
 ctanupload = true
 typesetopts = "-interaction=batchmode -shell-escape -halt-on-error"
 checkopts = "-interaction=batchmode -shell-escape -halt-on-error"
-exefiles = {"cfg.pl"}
 sourcefiles = {"*.dtx", "*.ins", "*-????-??-??.sty"}
 checkengines = {"pdftex", "luatex", "xetex"}
-tagfiles = {"build.lua", "cfg.dtx"}
-cleanfiles = {"build", "_docshots", "*.run.xml", "*.log", "*.bcf", "*.glo", "*.fls", "*.idx", "*.out", "*.fdb_latexmk", "*.aux", "*.sty", "*.zip", "cfg.pdf", "*.bbl"}
+tagfiles = {"build.lua", "naive-ebnf.dtx"}
+cleanfiles = {"build", "_docshots", "*.run.xml", "*.log", "*.bcf", "*.glo", "*.fls", "*.idx", "*.out", "*.fdb_latexmk", "*.aux", "*.sty", "*.zip", "naive-ebnf.pdf", "*.bbl"}
 dynamicfiles = {"*.bbl"}
-tagfiles = {"cfg.dtx", "build.lua"}
+tagfiles = {"naive-ebnf.dtx", "build.lua"}
 typesetruns = 2
 checkruns = 2
 
 uploadconfig = {
-  pkg = "cfg",
+  pkg = "naive-ebnf",
   version = "0.0.0",
   author = "Yegor Bugayenko",
   uploader = "Yegor Bugayenko",
   email = "yegor256@gmail.com",
   note = "Bug fixes",
   announcement = "",
-  ctanPath = "/biblio/bibtex/utils/cfg",
-  bugtracker = "https://github.com/yegor256/cfg/issues",
+  ctanPath = "/biblio/bibtex/utils/naive-ebnf",
+  bugtracker = "https://github.com/yegor256/naive-ebnf/issues",
   home = "",
-  description = "Context-Free Grammars in EBNF",
+  description = "EBNF in Plain Text",
   development = "",
   license = "mit",
-  summary = "With the help of this LaTeX package a context-free graph (CFG) may be rendered in a plain-text mode using a simplified EBNF notation.",
-  repository = "https://github.com/yegor256/cfg",
+  summary = "With the help of this LaTeX package a context-free grammar (CFG) may be rendered in a plain-text mode using a simplified EBNF notation",
+  repository = "https://github.com/yegor256/naive-ebnf",
   support = "",
   topic = {""}
 }
