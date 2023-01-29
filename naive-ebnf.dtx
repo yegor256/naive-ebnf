@@ -227,10 +227,12 @@
 \NewDocumentEnvironment{ebnf}{}{\filecontentsdefmacro\l__ebnf_tmp_tl}{
   \endfilecontentsdefmacro
   \str_set:NV \l__ebnf_tmp_tl \l__ebnf_tmp_tl
-  \regex_replace_all:nnN { \{(.+)\} }
+  \regex_replace_all:nnN { \{(.+?)\} }
     { \c{ebnf@repetition}{\1} } \l__ebnf_tmp_tl
-  \regex_replace_all:nnN { \((.+)\) }
+  \regex_replace_all:nnN { \((.+?)\) }
     { \c{ebnf@grouping}{\1} } \l__ebnf_tmp_tl
+  \regex_replace_all:nnN { \[([^\]]+?)\] }
+    { \c{ebnf@optional}{\1} } \l__ebnf_tmp_tl
   \regex_replace_all:nnN { <([A-Za-z][a-z-]+)> }
     { \c{nonterminal}{\1} } \l__ebnf_tmp_tl
   \regex_replace_all:nnN { "([^"]+)" }
@@ -239,8 +241,6 @@
     { \^^M := } \l__ebnf_tmp_tl
   \regex_replace_all:nnN { \| }
     { \c{ebnf@alternation}{} } \l__ebnf_tmp_tl
-  \regex_replace_all:nnN { \[([^\]]+)\] }
-    { \c{ebnf@optional}{\1} } \l__ebnf_tmp_tl
   \regex_replace_all:nnN { \^^M\s*:= }
     { \^^M \c{-}\c{hspace}{4em} \c{ebnf@alternation}{} } \l__ebnf_tmp_tl
   \regex_replace_all:nnN { := }
