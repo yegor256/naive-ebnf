@@ -59,7 +59,7 @@
 \makeatletter
 \newcommand\cfg@optional[1]
   {\cfg@color{gray}{[} #1 \cfg@color{gray}{]}}
-\newcommand\cfg@multi[1]
+\newcommand\cfg@repetition[1]
   {\cfg@color{gray}{\{} #1 \cfg@color{gray}{\}}}
 \newcommand\cfg@variable[1]
   {{\sffamily$\langle$#1$\rangle$}}
@@ -83,7 +83,7 @@
   \endfilecontentsdefmacro
   \str_set:NV \l__cfg_tmp_tl \l__cfg_tmp_tl
   \regex_replace_all:nnN { \{(.+)\} }
-    { \c{cfg@multi}{\1} } \l__cfg_tmp_tl
+    { \c{cfg@repetition}{\1} } \l__cfg_tmp_tl
   \regex_replace_all:nnN { <([A-Za-z][a-z-]+)> }
     { \c{cfg@variable}{\1} } \l__cfg_tmp_tl
   \regex_replace_all:nnN { "([^"]+)" }
