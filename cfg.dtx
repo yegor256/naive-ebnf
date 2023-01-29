@@ -170,7 +170,7 @@
 \ExplSyntaxOff
 \newcommand\cfg@to
   {\cfg@color{gray}{\(\to\)}}
-\newcommand\cfg@or
+\newcommand\cfg@alternation
   {\cfg@color{gray}{\(\vert\)}}
 \newcommand\cfg@eol{\\}
 \makeatother
@@ -193,11 +193,11 @@
   \regex_replace_all:nnN { \^^M\s*\| }
     { \^^M := } \l__cfg_tmp_tl
   \regex_replace_all:nnN { \| }
-    { \c{cfg@or}{} } \l__cfg_tmp_tl
+    { \c{cfg@alternation}{} } \l__cfg_tmp_tl
   \regex_replace_all:nnN { \[([^\]]+)\] }
     { \c{cfg@optional}{\1} } \l__cfg_tmp_tl
   \regex_replace_all:nnN { \^^M\s*:= }
-    { \^^M \c{-}\c{hspace}{24pt} \c{cfg@or}{} } \l__cfg_tmp_tl
+    { \^^M \c{-}\c{hspace}{24pt} \c{cfg@alternation}{} } \l__cfg_tmp_tl
   \regex_replace_all:nnN { := }
     { \c{cfg@to}{} } \l__cfg_tmp_tl
   \regex_replace_all:nnN { \^^M }
