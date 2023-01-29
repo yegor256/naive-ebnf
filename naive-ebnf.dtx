@@ -212,11 +212,11 @@
 %    \begin{macrocode}
 \makeatletter
 \newcommand\ebnf@optional[1]
-  {\ebnf@color{gray}{[} #1 \ebnf@color{gray}{]}}
+  {\ebnf@color{gray}{[}#1\ebnf@color{gray}{]}}
 \newcommand\ebnf@repetition[1]
-  {\ebnf@color{gray}{\{} #1 \ebnf@color{gray}{\}}}
+  {\ebnf@color{gray}{\{}#1\ebnf@color{gray}{\}}}
 \newcommand\ebnf@grouping[1]
-  {\ebnf@color{gray}{(} #1 \ebnf@color{gray}{)}}
+  {\ebnf@color{gray}{(}#1\ebnf@color{gray}{)}}
 \ExplSyntaxOn
 \newcommand\ebnf@terminal[1]{
   \tl_set:Nn \l_ebnf_tl { }
