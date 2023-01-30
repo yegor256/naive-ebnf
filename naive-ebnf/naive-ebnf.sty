@@ -70,7 +70,7 @@
 \makeatletter
 \newcommand\nonterminal[1]{%
   \ebnf@color{gray}{\relax\ifmmode\langle\else\(\langle\)\fi}%
-  \relax\ifmmode\textsf{#1}\else#1\fi%
+  \relax\ifmmode\textsf{#1}\else{\sffamily#1}\fi%
   \ebnf@color{gray}{\relax\ifmmode\rangle\else\(\rangle\)\fi}}
 \makeatother
 
