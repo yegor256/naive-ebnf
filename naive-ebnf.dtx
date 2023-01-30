@@ -133,6 +133,19 @@
 % with \terminal{)}.
 % \end{document}
 % \end{docshot}
+% It's possible to use them in math-mode too, for example:
+% \docshotOptions{firstline=6,lastline=8}
+% \begin{docshot}
+% \documentclass{article}
+% \pagestyle{empty}
+% \usepackage[paperwidth=3in]{geometry}
+% \usepackage{naive-ebnf}
+% \begin{document}
+% If $\terminal{(} f_1 \nonterminal{Var}
+% \terminal{)}$ is always true, then
+% $f_1$ is a tautology.
+% \end{document}
+% \end{docshot}
 
 % \section{Package Options}
 
@@ -187,12 +200,15 @@
 
 % \begin{macro}{\terminal}
 % \changes{0.0.2}{2023/01/29}{New command \texttt{\char`\\terminal} added, to enable rendering terminal symbols outside of the \texttt{ebnf} environment.}
+% \changes{0.0.3}{2023/01/30}{Quotes fixed in both text and math modes.}
 % Then, we a command to render a single terminal:
 %    \begin{macrocode}
 \makeatletter
-\newcommand\terminal[1]{%
+\newcommand\terminal[1]{{%
   \relax\ifmmode\else\ttfamily\fi%
-  \ebnf@color{gray}{"}#1\ebnf@color{gray}{"}}
+  \ebnf@color{gray}{\relax\ifmmode\textsf{``}\else{\sffamily``}\fi}%
+  #1%
+  \ebnf@color{gray}{\relax\ifmmode\textsf{''}\else{\sffamily''}\fi}}}
 \makeatother
 %    \end{macrocode}
 % \end{macro}
@@ -202,8 +218,10 @@
 % Then, we a command to render a single non-terminal:
 %    \begin{macrocode}
 \makeatletter
-\newcommand\nonterminal[1]
-  {\(\ebnf@color{gray}{\langle}\textsf{#1}\ebnf@color{gray}{\rangle}\)}
+\newcommand\nonterminal[1]{%
+  \ebnf@color{gray}{\relax\ifmmode\langle\else\(\langle\)\fi}%
+  \relax\ifmmode\textsf{#1}\else#1\fi%
+  \ebnf@color{gray}{\relax\ifmmode\rangle\else\(\rangle\)\fi}}
 \makeatother
 %    \end{macrocode}
 % \end{macro}
