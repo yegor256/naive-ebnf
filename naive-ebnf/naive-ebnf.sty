@@ -60,14 +60,18 @@
 \makeatother
 
 \makeatletter
-\newcommand\terminal[1]{%
+\newcommand\terminal[1]{{%
   \relax\ifmmode\else\ttfamily\fi%
-  \ebnf@color{gray}{"}#1\ebnf@color{gray}{"}}
+  \ebnf@color{gray}{\relax\ifmmode\textsf{``}\else{\sffamily``}\fi}%
+  #1%
+  \ebnf@color{gray}{\relax\ifmmode\textsf{''}\else{\sffamily''}\fi}}}
 \makeatother
 
 \makeatletter
-\newcommand\nonterminal[1]
-  {\(\ebnf@color{gray}{\langle}\textsf{#1}\ebnf@color{gray}{\rangle}\)}
+\newcommand\nonterminal[1]{%
+  \ebnf@color{gray}{\relax\ifmmode\langle\else\(\langle\)\fi}%
+  \relax\ifmmode\textsf{#1}\else#1\fi%
+  \ebnf@color{gray}{\relax\ifmmode\rangle\else\(\rangle\)\fi}}
 \makeatother
 
 \makeatletter
