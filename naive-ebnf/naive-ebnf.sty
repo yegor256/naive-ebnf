@@ -87,6 +87,11 @@
   \tl_set_rescan:Nno \l_ebnf_tl { } { #1 }
   \terminal{\l_ebnf_tl}
 }
+\newcommand\ebnf@nonterminal[1]{
+  \tl_set:Nn \l_ebnf_tl { }
+  \tl_set_rescan:Nno \l_ebnf_tl { } { #1 }
+  \nonterminal{\l_ebnf_tl}
+}
 \ExplSyntaxOff
 \newcommand\ebnf@to
   {\ebnf@color{gray}{\(\to\)}}
@@ -107,8 +112,8 @@
     {\c{ebnf@grouping}{\1}} \l__ebnf_tmp_tl
   \regex_replace_all:nnN { \[([^\]]+?)\] }
     {\c{ebnf@optional}{\1}} \l__ebnf_tmp_tl
-  \regex_replace_all:nnN { <([A-Za-z][a-z-]+)> }
-    {\c{nonterminal}{\1}} \l__ebnf_tmp_tl
+  \regex_replace_all:nnN { <([^>]+)> }
+    {\c{ebnf@nonterminal}{\1}} \l__ebnf_tmp_tl
   \regex_replace_all:nnN { "([^"]+)" }
     {\c{ebnf@terminal}{\1}} \l__ebnf_tmp_tl
   \regex_replace_all:nnN { \^^M\s*\| }
