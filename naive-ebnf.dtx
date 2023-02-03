@@ -90,7 +90,7 @@
 % \usepackage{mathtools}
 % \begin{document}
 % \begin{ebnf}
-% <Expr> := <Var>
+% <$\lambda$-Expr> := <Var>
 %   | "$\lambda$" <Var> "." <Expr>
 %   | "$\lparen$" <Expr> <Expr> "$\rparen$"
 % \end{ebnf}
@@ -136,14 +136,15 @@
 % \end{document}
 % \end{docshot}
 % It's possible to use them in math-mode too, for example:
-% \docshotOptions{firstline=6,lastline=8}
+% \docshotOptions{firstline=6,lastline=9}
 % \begin{docshot}
 % \documentclass{article}
 % \pagestyle{empty}
 % \usepackage[paperwidth=3in]{geometry}
 % \usepackage{naive-ebnf}
 % \begin{document}
-% If $\terminal{(} f_1 \nonterminal{Var}
+% If $\terminal{(} f_1
+% \nonterminal{$\lambda$-Var}
 % \terminal{)}$ is always true, then
 % $f_1$ is a tautology.
 % \end{document}
@@ -243,6 +244,11 @@
   \tl_set_rescan:Nno \l_ebnf_tl { } { #1 }
   \terminal{\l_ebnf_tl}
 }
+\newcommand\ebnf@nonterminal[1]{
+  \tl_set:Nn \l_ebnf_tl { }
+  \tl_set_rescan:Nno \l_ebnf_tl { } { #1 }
+  \nonterminal{\l_ebnf_tl}
+}
 \ExplSyntaxOff
 \newcommand\ebnf@to
   {\ebnf@color{gray}{\(\to\)}}
@@ -253,6 +259,7 @@
 %    \end{macrocode}
 
 % \begin{macro}{ebnf}
+% \changes{0.0.4}{2023/02/03}{Any symbols are allowed inside \texttt{\char`\\nonterminal} commands and inside the \texttt{ebnf} environment, where non-terminals are mentioned.}
 % Then, we define the |ebnf| environment:
 %    \begin{macrocode}
 \ExplSyntaxOn
@@ -267,8 +274,8 @@
     {\c{ebnf@grouping}{\1}} \l__ebnf_tmp_tl
   \regex_replace_all:nnN { \[([^\]]+?)\] }
     {\c{ebnf@optional}{\1}} \l__ebnf_tmp_tl
-  \regex_replace_all:nnN { <([A-Za-z][a-z-]+)> }
-    {\c{nonterminal}{\1}} \l__ebnf_tmp_tl
+  \regex_replace_all:nnN { <([^>]+)> }
+    {\c{ebnf@nonterminal}{\1}} \l__ebnf_tmp_tl
   \regex_replace_all:nnN { "([^"]+)" }
     {\c{ebnf@terminal}{\1}} \l__ebnf_tmp_tl
   \regex_replace_all:nnN { \^^M\s*\| }
