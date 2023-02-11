@@ -1,0 +1,14 @@
+\input{regression-test.tex}
+\documentclass{article}
+\usepackage[trail=log.txt]{naive-ebnf}
+\usepackage{mathtools}
+\begin{document}
+\START
+
+\begin{ebnf}
+<$\lambda$-Expr> := <Var>
+  := "$\lambda$" <Var> "." <$\lambda$-Expr>
+  := "$\lparen$" <$\lambda$-Expr> <$\lambda$-Expr> "$\rparen$"
+\end{ebnf}
+
+\END
