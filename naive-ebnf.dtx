@@ -89,10 +89,10 @@
 % \usepackage{naive-ebnf}
 % \usepackage{mathtools}
 % \begin{document}
-% \begin{ebnf}
-% <$\lambda$-Expr> := <Var>
-%   | "$\lambda$" <Var> "." <Expr>
-%   | "$\lparen$" <Expr> <Expr> "$\rparen$"
+% \noindent\begin{ebnf}
+% <$\lambda$-Expr> := <Var> \\
+%   || "$\lambda$" <Var> "." <Expr> \\
+%   || "$\lparen$" <Expr> <Expr> "$\rparen$"
 % \end{ebnf}
 % \end{document}
 % \end{docshot}
@@ -107,6 +107,7 @@
 % \item \texttt{(...\char`\|...)} denotes a series of options to choose from;
 % \item |[...]| denotes an optional substitution;
 % \item |{...}| denotes a zero or more times repetition;
+% \item \texttt{\char`\|\char`\|} denotes an indented vertical bar at the beginning of the string.
 % \end{itemize}
 
 % \textbf{Attention}: The usage of some symbols is prohibited inside terminals. Instead, the following substitutions are recommended:
@@ -268,7 +269,6 @@
   {\ebnf@color{gray}{\(\to\)}}
 \newcommand\ebnf@alternation
   {\ebnf@color{gray}{\(\vert\)}}
-\newcommand\ebnf@eol{\\}
 \makeatother
 %    \end{macrocode}
 
@@ -279,33 +279,24 @@
 \ExplSyntaxOn
 \cs_generate_variant:Nn \tl_replace_all:Nnn {Nx}
 \makeatletter
-\NewDocumentEnvironment{ebnf}{}
-  {\filecontentsdefmacro\l__ebnf_tmp_tl}
-  {\endfilecontentsdefmacro%
-  \str_set:NV \l__ebnf_tmp_tl \l__ebnf_tmp_tl%
-  \str_set:Nx \l__ebnf_tmp_tl {\str_range:Nnn \l__ebnf_tmp_tl {1} {-2}}%
-  \regex_replace_all:nnN { \{(.+?)\} }%
+\NewDocumentEnvironment{ebnf}{+b}
+  {\tl_set:Nn\l__ebnf_tmp_tl{#1}}
+  {\regex_replace_all:nnN { \{(.+?)\} }%
     {\c{ebnf@repetition}{\1}} \l__ebnf_tmp_tl%
   \regex_replace_all:nnN { \((.+?)\) }%
     {\c{ebnf@grouping}{\1}} \l__ebnf_tmp_tl%
-  \regex_replace_all:nnN { \[([^\]]+?)\] }%
+  \regex_replace_all:nnN { \[(.+?)\] }%
     {\c{ebnf@optional}{\1}} \l__ebnf_tmp_tl%
-  \regex_replace_all:nnN { <([^>]+)> }%
+  \regex_replace_all:nnN { <(.+?)> }%
     {\c{ebnf@nonterminal}{\1}} \l__ebnf_tmp_tl%
-  \regex_replace_all:nnN { "([^"]+)" }%
+  \regex_replace_all:nnN { "(.+?)" }%
     {\c{ebnf@terminal}{\1}} \l__ebnf_tmp_tl%
-  \regex_replace_all:nnN { \\\\\^^M }%
-    {\\\\} \l__ebnf_tmp_tl%
-  \regex_replace_all:nnN { \^^M\s*\| }%
-    {\^^M :=} \l__ebnf_tmp_tl%
+  \regex_replace_all:nnN { \|\| }%
+    {\c{-}\c{quad}\c{ebnf@alternation}{}} \l__ebnf_tmp_tl%
   \regex_replace_all:nnN { \| }%
     {\c{ebnf@alternation}{}} \l__ebnf_tmp_tl%
-  \regex_replace_all:nnN { \^^M\s*:= }%
-    {\^^M \c{-}\c{hspace}{3em}\c{ebnf@alternation}{}} \l__ebnf_tmp_tl%
   \regex_replace_all:nnN { := }%
     {\c{ebnf@to}{}} \l__ebnf_tmp_tl%
-  \regex_replace_all:nnN { \^^M }%
-    {\c{ebnf@eol}{}} \l__ebnf_tmp_tl%
   \ifdefined\ebnf@trail%
     \newwrite\ebnf@write%
     \immediate\openout\ebnf@write\ebnf@trail\relax%
