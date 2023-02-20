@@ -1,3 +1,2 @@
 hard pgfopts
-hard filecontentsdef
 hard expl3
