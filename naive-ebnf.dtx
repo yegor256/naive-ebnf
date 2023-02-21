@@ -89,7 +89,7 @@
 % \usepackage{naive-ebnf}
 % \usepackage{mathtools}
 % \begin{document}
-% \noindent\begin{ebnf}
+% \begin{ebnf}
 % <$\lambda$-Expr> := <Var> \\
 %   || "$\lambda$" <Var> "." <Expr> \\
 %   || "$\lparen$" <Expr> <Expr> "$\rparen$"
@@ -194,6 +194,8 @@
   /ebnf/.cd,
   bw/.store in=\ebnf@bw,
   trail/.store in=\ebnf@trail,
+  trail/.default=naive-ebnf.tmp.tex,
+  trail
 }
 \ProcessPgfPackageOptions{/ebnf}
 %    \end{macrocode}
@@ -286,16 +288,20 @@
     {\c{ebnf@grouping}{\1}} \l__ebnf_tmp_tl%
   \regex_replace_all:nnN { \[(.+?)\] }%
     {\c{ebnf@optional}{\1}} \l__ebnf_tmp_tl%
+  \regex_replace_all:nnN { (<[^>]+?>\ :=) }%
+    {\c{makebox}[1in][r]{\1}} \l__ebnf_tmp_tl%
   \regex_replace_all:nnN { <(.+?)> }%
     {\c{ebnf@nonterminal}{\1}} \l__ebnf_tmp_tl%
   \regex_replace_all:nnN { "(.+?)" }%
     {\c{ebnf@terminal}{\1}} \l__ebnf_tmp_tl%
-  \regex_replace_all:nnN { \|\| }%
-    {\c{-}\c{quad}\c{ebnf@alternation}{}} \l__ebnf_tmp_tl%
+  \regex_replace_all:nnN { \|(\|) }%
+    {\c{makebox}[1in][r]{ \1 }} \l__ebnf_tmp_tl%
   \regex_replace_all:nnN { \| }%
     {\c{ebnf@alternation}{}} \l__ebnf_tmp_tl%
   \regex_replace_all:nnN { := }%
     {\c{ebnf@to}{}} \l__ebnf_tmp_tl%
+  \tl_put_left:Nn \l__ebnf_tmp_tl {\noindent}
+  \tl_put_right:Nn \l__ebnf_tmp_tl {}
   \ifdefined\ebnf@trail%
     \newwrite\ebnf@write%
     \immediate\openout\ebnf@write\ebnf@trail\relax%
