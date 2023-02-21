@@ -119,6 +119,24 @@
 % \item |$\vert$| instead of ``\texttt{\char`\|}''.
 % \end{itemize}
 
+% \DescribeMacro{width}
+% There is an optional argument of |ebnf| environment, which sets the width of the left-hand side of each rule
+% (the default width is |6em|):
+% \docshotOptions{firstline=4,lastline=10}
+% \begin{docshot}
+% \documentclass{minimal}
+% \usepackage{naive-ebnf}
+% \begin{document}\noindent
+% This EBNF has a larger width of \\
+% the left hand side than usual: \par
+% \begin{ebnf}[1.5in]
+% <VeryLongVariable> := <X> | <Y> \\
+% <X> := "X" \\
+% <Y> := "Y"
+% \end{ebnf}
+% \end{document}
+% \end{docshot}
+
 % \DescribeMacro{\terminal}
 % \DescribeMacro{\nonterminal}
 % Inside the text, terminals and non-terminals may be formatted using two supplementary commands:
@@ -280,22 +298,23 @@
 \ExplSyntaxOn
 \cs_generate_variant:Nn \tl_replace_all:Nnn {Nx}
 \makeatletter
-\NewDocumentEnvironment{ebnf}{+b}
-  {\tl_set:Nn\l__ebnf_tmp_tl{#1}}
-  {\regex_replace_all:nnN { \{(.+?)\} }%
+\NewDocumentEnvironment{ebnf}{O{4em}+b}
+  {\tl_set:Nn\l__ebnf_tmp_tl{#2}}
+  {%
+  \regex_replace_all:nnN { \{(.+?)\} }%
     {\c{ebnf@repetition}{\1}} \l__ebnf_tmp_tl%
   \regex_replace_all:nnN { \((.+?)\) }%
     {\c{ebnf@grouping}{\1}} \l__ebnf_tmp_tl%
   \regex_replace_all:nnN { \[(.+?)\] }%
     {\c{ebnf@optional}{\1}} \l__ebnf_tmp_tl%
   \regex_replace_all:nnN { (<[^>]+?>\ :=) }%
-    {\c{makebox}[1in][r]{\1}} \l__ebnf_tmp_tl%
+    {\c{makebox}[#1][r]{\1}} \l__ebnf_tmp_tl%
   \regex_replace_all:nnN { <(.+?)> }%
     {\c{ebnf@nonterminal}{\1}} \l__ebnf_tmp_tl%
   \regex_replace_all:nnN { "(.+?)" }%
     {\c{ebnf@terminal}{\1}} \l__ebnf_tmp_tl%
   \regex_replace_all:nnN { \|(\|) }%
-    {\c{makebox}[1in][r]{ \1 }} \l__ebnf_tmp_tl%
+    {\c{makebox}[#1][r]{ \1 }} \l__ebnf_tmp_tl%
   \regex_replace_all:nnN { \| }%
     {\c{ebnf@alternation}{}} \l__ebnf_tmp_tl%
   \regex_replace_all:nnN { := }%
