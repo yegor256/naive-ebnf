@@ -43,6 +43,7 @@
 
 
 
+
 \RequirePackage{pgfopts}
 \pgfkeys{
   /ebnf/.cd,
@@ -105,22 +106,23 @@
 \ExplSyntaxOn
 \cs_generate_variant:Nn \tl_replace_all:Nnn {Nx}
 \makeatletter
-\NewDocumentEnvironment{ebnf}{+b}
-  {\tl_set:Nn\l__ebnf_tmp_tl{#1}}
-  {\regex_replace_all:nnN { \{(.+?)\} }%
+\NewDocumentEnvironment{ebnf}{O{4em}+b}
+  {\tl_set:Nn\l__ebnf_tmp_tl{#2}}
+  {%
+  \regex_replace_all:nnN { \{(.+?)\} }%
     {\c{ebnf@repetition}{\1}} \l__ebnf_tmp_tl%
   \regex_replace_all:nnN { \((.+?)\) }%
     {\c{ebnf@grouping}{\1}} \l__ebnf_tmp_tl%
   \regex_replace_all:nnN { \[(.+?)\] }%
     {\c{ebnf@optional}{\1}} \l__ebnf_tmp_tl%
   \regex_replace_all:nnN { (<[^>]+?>\ :=) }%
-    {\c{makebox}[1in][r]{\1}} \l__ebnf_tmp_tl%
+    {\c{makebox}[#1][r]{\1}} \l__ebnf_tmp_tl%
   \regex_replace_all:nnN { <(.+?)> }%
     {\c{ebnf@nonterminal}{\1}} \l__ebnf_tmp_tl%
   \regex_replace_all:nnN { "(.+?)" }%
     {\c{ebnf@terminal}{\1}} \l__ebnf_tmp_tl%
   \regex_replace_all:nnN { \|(\|) }%
-    {\c{makebox}[1in][r]{ \1 }} \l__ebnf_tmp_tl%
+    {\c{makebox}[#1][r]{ \1 }} \l__ebnf_tmp_tl%
   \regex_replace_all:nnN { \| }%
     {\c{ebnf@alternation}{}} \l__ebnf_tmp_tl%
   \regex_replace_all:nnN { := }%
