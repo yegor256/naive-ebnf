@@ -79,6 +79,10 @@
 \makeatother
 
 \makeatletter
+\newcommand\sterminal[1]{\relax\ifmmode\else\ttfamily\fi#1}%
+\makeatother
+
+\makeatletter
 \newcommand\ebnf@optional[1]
   {\ebnf@color{gray}{[}#1\ebnf@color{gray}{]}}
 \newcommand\ebnf@repetition[1]
@@ -90,6 +94,11 @@
   \tl_set:Nn \l_ebnf_tl { }
   \tl_set_rescan:Nno \l_ebnf_tl { } { #1 }
   \terminal{\l_ebnf_tl}
+}
+\newcommand\ebnf@sterminal[1]{
+  \tl_set:Nn \l_ebnf_tl { }
+  \tl_set_rescan:Nno \l_ebnf_tl { } { #1 }
+  \sterminal{\l_ebnf_tl}
 }
 \newcommand\ebnf@nonterminal[1]{
   \tl_set:Nn \l_ebnf_tl { }
@@ -121,6 +130,8 @@
     {\c{ebnf@nonterminal}{\1}} \l__ebnf_tmp_tl%
   \regex_replace_all:nnN { "(.+?)" }%
     {\c{ebnf@terminal}{\1}} \l__ebnf_tmp_tl%
+  \regex_replace_all:nnN { '(.+?)' }%
+    {\c{ebnf@sterminal}{\1}} \l__ebnf_tmp_tl%
   \regex_replace_all:nnN { \|(\|) }%
     {\c{makebox}[#1][r]{ \1 }} \l__ebnf_tmp_tl%
   \regex_replace_all:nnN { \| }%
