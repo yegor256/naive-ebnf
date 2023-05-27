@@ -104,6 +104,7 @@
 % \item |:=| separates the left-hand side from the right-hand side of the production rule;
 % \item |<...>| denotes a non-terminal (variable);
 % \item |"..."| denotes a terminal symbol;
+% \item |'...'| denotes a special non-printable terminal symbol;
 % \item \texttt{(...\char`\|...)} denotes a series of options to choose from;
 % \item |[...]| denotes an optional substitution;
 % \item |{...}| denotes a zero or more times repetition;
@@ -131,7 +132,7 @@
 % the left hand side than usual: \par
 % \begin{ebnf}[1.5in]
 % <VeryLongVariable> := <X> | <Y> \\
-% <X> := "X" \\
+% <X> := "X" 'EOL' \\
 % <Y> := "Y"
 % \end{ebnf}
 % \end{document}
@@ -139,7 +140,8 @@
 
 % \DescribeMacro{\terminal}
 % \DescribeMacro{\nonterminal}
-% Inside the text, terminals and non-terminals may be formatted using two supplementary commands:
+% \DescribeMacro{\sterminal}
+% Inside the text, terminals, non-terminals, and special terminals may be formatted using three supplementary commands:
 % \docshotOptions{firstline=6,lastline=10}
 % \begin{docshot}
 % \documentclass{article}
@@ -204,6 +206,7 @@
 % \changes{0.0.2}{2023/01/29}{Proper parsing of grouping.}
 % \changes{0.0.2}{2023/01/29}{Substitutions suggested for special symbols.}
 % \changes{0.0.5}{2023/02/04}{New package option \texttt{trail} added, to enable saving generated \TeX{} content to a file, for debugging purposes.}
+% \changes{0.0.6}{2023/05/27}{Non-printable terminal symbols and \texttt{\char`\\sterminal} command added.}
 
 % First, we process package options:
 %    \begin{macrocode}
@@ -263,6 +266,16 @@
 %    \end{macrocode}
 % \end{macro}
 
+% \begin{macro}{\sterminal}
+% \changes{0.0.6}{2023/05/27}{New command \texttt{\char`\\sterminal} added, to enable rendering of special non-printable terminal symbols outside of the \texttt{ebnf} environment.}
+% Then, we a command to render a single non-terminal:
+%    \begin{macrocode}
+\makeatletter
+\newcommand\sterminal[1]{\relax\ifmmode\else\ttfamily\fi#1}%
+\makeatother
+%    \end{macrocode}
+% \end{macro}
+
 % Then, we define supplementary commands:
 %    \begin{macrocode}
 \makeatletter
@@ -277,6 +290,11 @@
   \tl_set:Nn \l_ebnf_tl { }
   \tl_set_rescan:Nno \l_ebnf_tl { } { #1 }
   \terminal{\l_ebnf_tl}
+}
+\newcommand\ebnf@sterminal[1]{
+  \tl_set:Nn \l_ebnf_tl { }
+  \tl_set_rescan:Nno \l_ebnf_tl { } { #1 }
+  \sterminal{\l_ebnf_tl}
 }
 \newcommand\ebnf@nonterminal[1]{
   \tl_set:Nn \l_ebnf_tl { }
@@ -313,6 +331,8 @@
     {\c{ebnf@nonterminal}{\1}} \l__ebnf_tmp_tl%
   \regex_replace_all:nnN { "(.+?)" }%
     {\c{ebnf@terminal}{\1}} \l__ebnf_tmp_tl%
+  \regex_replace_all:nnN { '(.+?)' }%
+    {\c{ebnf@sterminal}{\1}} \l__ebnf_tmp_tl%
   \regex_replace_all:nnN { \|(\|) }%
     {\c{makebox}[#1][r]{ \1 }} \l__ebnf_tmp_tl%
   \regex_replace_all:nnN { \| }%
