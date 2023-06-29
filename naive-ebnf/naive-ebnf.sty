@@ -50,7 +50,6 @@
   bw/.store in=\ebnf@bw,
   trail/.store in=\ebnf@trail,
   trail/.default=naive-ebnf.tmp.tex,
-  trail
 }
 \ProcessPgfPackageOptions{/ebnf}
 
@@ -133,8 +132,8 @@
   \regex_replace_all:nnN { '(.+?)' }%
     {\c{ebnf@sterminal}{\1}} \l__ebnf_tmp_tl%
   \regex_replace_all:nnN { \|(\|) }%
-    {\c{makebox}[#1][r]{ \ \1\ }} \l__ebnf_tmp_tl%
-  \regex_replace_all:nnN { \ \|\ }%
+    {\c{makebox}[#1][r]{ \1 }} \l__ebnf_tmp_tl%
+  \regex_replace_all:nnN { \| }%
     {\c{ebnf@alternation}{}} \l__ebnf_tmp_tl%
   \regex_replace_all:nnN { := }%
     {\c{ebnf@to}{}} \l__ebnf_tmp_tl%
