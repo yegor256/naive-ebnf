@@ -117,6 +117,11 @@
 \NewDocumentEnvironment{ebnf}{O{4em}+b}
   {\tl_set:Nn\l__ebnf_tmp_tl{#2}}
   {%
+  \regex_replace_all:nnN { ([^\ ])< } {\1\\textless{}} \l__ebnf_tmp_tl%
+  \regex_replace_all:nnN { >([^\ ]) } {\\textgreater{}\1} \l__ebnf_tmp_tl%
+  \regex_replace_all:nnN { ([^\ ])'([^\ ]) } {\1\\textquotesingle{}\2} \l__ebnf_tmp_tl%
+  \regex_replace_all:nnN { ([^\ ])\|([^\ ]) } {\1\\textbar{}\2} \l__ebnf_tmp_tl%
+  %
   \regex_replace_all:nnN { \{\ (.+?)\ \} }%
     {\c{ebnf@repetition}{\1}} \l__ebnf_tmp_tl%
   \regex_replace_all:nnN { \(\ (.+?)\ \) }%
