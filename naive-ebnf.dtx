@@ -133,7 +133,7 @@
 % \begin{ebnf}[1.5in]
 % <VeryLongVariable> := <X> | <Y> \\
 % <X> := "X" 'EOL' \\
-% <Y> := "Y"
+% <Y> := "Y" \\
 % \end{ebnf}
 % \end{document}
 % \end{docshot}
@@ -215,7 +215,6 @@
   bw/.store in=\ebnf@bw,
   trail/.store in=\ebnf@trail,
   trail/.default=naive-ebnf.tmp.tex,
-  trail
 }
 \ProcessPgfPackageOptions{/ebnf}
 %    \end{macrocode}
@@ -333,8 +332,8 @@
   \regex_replace_all:nnN { '(.+?)' }%
     {\c{ebnf@sterminal}{\1}} \l__ebnf_tmp_tl%
   \regex_replace_all:nnN { \|(\|) }%
-    {\c{makebox}[#1][r]{ \ \1\ }} \l__ebnf_tmp_tl%
-  \regex_replace_all:nnN { \ \|\ }%
+    {\c{makebox}[#1][r]{ \1 }} \l__ebnf_tmp_tl%
+  \regex_replace_all:nnN { \| }%
     {\c{ebnf@alternation}{}} \l__ebnf_tmp_tl%
   \regex_replace_all:nnN { := }%
     {\c{ebnf@to}{}} \l__ebnf_tmp_tl%
