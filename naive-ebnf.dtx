@@ -256,10 +256,10 @@
 % Then, we a command to render a single non-terminal:
 %    \begin{macrocode}
 \makeatletter
-\newcommand\nonterminal[1]{%
+\newcommand\nonterminal[1]{{%
   \ebnf@color{gray}{\relax\ifmmode\langle\else\(\langle\)\fi}%
   \relax\ifmmode\textsf{#1}\else{\sffamily#1}\fi%
-  \ebnf@color{gray}{\relax\ifmmode\rangle\else\(\rangle\)\fi}}
+  \ebnf@color{gray}{\relax\ifmmode\rangle\else\(\rangle\)\fi}}}
 \makeatother
 %    \end{macrocode}
 % \end{macro}
@@ -269,7 +269,7 @@
 % Then, we a command to render a single non-terminal:
 %    \begin{macrocode}
 \makeatletter
-\newcommand\sterminal[1]{\relax\ifmmode\else\ttfamily\fi#1}%
+\newcommand\sterminal[1]{{\relax\ifmmode\else\ttfamily\fi#1}}%
 \makeatother
 %    \end{macrocode}
 % \end{macro}
