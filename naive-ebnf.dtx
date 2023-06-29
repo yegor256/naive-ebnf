@@ -132,8 +132,8 @@
 % the left hand side than usual: \par
 % \begin{ebnf}[1.5in]
 % <VeryLongVariable> := <X> | <Y> \\
-% <X> := "X" 'EOL' "'" \\
-% <Y> := "Y" ">" "<" \\
+% <X> := "X" 'EOL' "'" "|" \\
+% <Y> := "Y" ">" "<" "]" "[" \\
 % \end{ebnf}
 % \end{document}
 % \end{docshot}
@@ -320,6 +320,7 @@
   \regex_replace_all:nnN { ([^\ ])< } {\1\\textless{}} \l__ebnf_tmp_tl%
   \regex_replace_all:nnN { >([^\ ]) } {\\textgreater{}\1} \l__ebnf_tmp_tl%
   \regex_replace_all:nnN { ([^\ ])'([^\ ]) } {\1\\textquotesingle{}\2} \l__ebnf_tmp_tl%
+  \regex_replace_all:nnN { ([^\ ])\|([^\ ]) } {\1\\textbar{}\2} \l__ebnf_tmp_tl%
   %
   \regex_replace_all:nnN { \{\ (.+?)\ \} }%
     {\c{ebnf@repetition}{\1}} \l__ebnf_tmp_tl%
