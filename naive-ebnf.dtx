@@ -318,11 +318,11 @@
 \NewDocumentEnvironment{ebnf}{O{4em}+b}
   {\tl_set:Nn\l__ebnf_tmp_tl{#2}}
   {%
-  \regex_replace_all:nnN { \{(.+?)\} }%
+  \regex_replace_all:nnN { \{\ (.+?)\ \} }%
     {\c{ebnf@repetition}{\1}} \l__ebnf_tmp_tl%
-  \regex_replace_all:nnN { \((.+?)\) }%
+  \regex_replace_all:nnN { \(\ (.+?)\ \) }%
     {\c{ebnf@grouping}{\1}} \l__ebnf_tmp_tl%
-  \regex_replace_all:nnN { \[(.+?)\] }%
+  \regex_replace_all:nnN { \[\ (.+?)\ \] }%
     {\c{ebnf@optional}{\1}} \l__ebnf_tmp_tl%
   \regex_replace_all:nnN { (<[^>]+?>\ :=) }%
     {\c{makebox}[#1][r]{\1}} \l__ebnf_tmp_tl%
@@ -333,8 +333,8 @@
   \regex_replace_all:nnN { '(.+?)' }%
     {\c{ebnf@sterminal}{\1}} \l__ebnf_tmp_tl%
   \regex_replace_all:nnN { \|(\|) }%
-    {\c{makebox}[#1][r]{ \1 }} \l__ebnf_tmp_tl%
-  \regex_replace_all:nnN { \| }%
+    {\c{makebox}[#1][r]{ \ \1\ }} \l__ebnf_tmp_tl%
+  \regex_replace_all:nnN { \ \|\ }%
     {\c{ebnf@alternation}{}} \l__ebnf_tmp_tl%
   \regex_replace_all:nnN { := }%
     {\c{ebnf@to}{}} \l__ebnf_tmp_tl%
