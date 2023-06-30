@@ -44,6 +44,7 @@
 
 
 
+
 \RequirePackage{pgfopts}
 \pgfkeys{
   /ebnf/.cd,
@@ -90,18 +91,18 @@
   {\ebnf@color{gray}{(}#1\ebnf@color{gray}{)}}
 \ExplSyntaxOn
 \newcommand\ebnf@terminal[1]{
-  \tl_set:Nn \l_ebnf_tl { }
-  \tl_set_rescan:Nno \l_ebnf_tl { } { #1 }
+  \tl_set:Nn \l_ebnf_tl {}
+  \tl_set_rescan:Nnn \l_ebnf_tl {} { #1 }
   \terminal{\l_ebnf_tl}
 }
 \newcommand\ebnf@sterminal[1]{
-  \tl_set:Nn \l_ebnf_tl { }
-  \tl_set_rescan:Nno \l_ebnf_tl { } { #1 }
+  \tl_set:Nn \l_ebnf_tl {}
+  \tl_set_rescan:Nnn \l_ebnf_tl {} { #1 }
   \sterminal{\l_ebnf_tl}
 }
 \newcommand\ebnf@nonterminal[1]{
-  \tl_set:Nn \l_ebnf_tl { }
-  \tl_set_rescan:Nno \l_ebnf_tl { } { #1 }
+  \tl_set:Nn \l_ebnf_tl {}
+  \tl_set_rescan:Nnn \l_ebnf_tl {} { #1 }
   \nonterminal{\l_ebnf_tl}
 }
 \ExplSyntaxOff
