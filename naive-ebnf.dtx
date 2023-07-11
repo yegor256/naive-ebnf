@@ -106,6 +106,7 @@
 % \item |"..."| denotes a terminal symbol;
 % \item |'...'| denotes a special non-printable terminal symbol, like |'EOL'|;
 % \item \texttt{(...\char`\|...)} denotes a series of options to choose from;
+% \item |/.../| denotes a regular expression, like |/[a-z]+/|;
 % \item |[...]| denotes an optional substitution;
 % \item |{...}| denotes a zero or more times repetition;
 % \item \texttt{\char`\|\char`\|} denotes an indented vertical bar at the beginning of the string.
@@ -168,6 +169,23 @@
 % \nonterminal{$\lambda$-Var}
 % \terminal{)}$ is always true, then
 % $f_1$ is a tautology.
+% \end{document}
+% \end{docshot}
+
+% \DescribeMacro{\regexp}
+% A regular expression is possible too:
+% \docshotOptions{firstline=6,lastline=10}
+% \begin{docshot}
+% \documentclass{article}
+% \pagestyle{empty}
+% \usepackage[paperwidth=4in]{geometry}
+% \usepackage{naive-ebnf}
+% \begin{document}
+% \begin{ebnf}[1.5in]
+% <bool> := "TRUE" | "FALSE" \\
+% <integer> := /(+\char`\|-)?[0-9]+/ \\
+% <byte> := /[0-9a-f]\char`\{2\char`\}/ \\
+% \end{ebnf}
 % \end{document}
 % \end{docshot}
 
@@ -254,7 +272,7 @@
 % \begin{macro}{\terminal}
 % \changes{0.0.2}{2023/01/29}{New command \texttt{\char`\\terminal} added, to enable rendering terminal symbols outside of the \texttt{ebnf} environment.}
 % \changes{0.0.3}{2023/01/30}{Quotes fixed in both text and math modes.}
-% Then, we a command to render a single terminal:
+% Then, we define a command to render a single terminal:
 %    \begin{macrocode}
 \makeatletter
 \newcommand\terminal[1]{{%
@@ -268,7 +286,7 @@
 
 % \begin{macro}{\nonterminal}
 % \changes{0.0.2}{2023/01/29}{New command \texttt{\char`\\nonterminal} added, to enable rendering non-terminal symbols outside of the \texttt{ebnf} environment.}
-% Then, we a command to render a single non-terminal:
+% Then, we define a command to render a single non-terminal:
 %    \begin{macrocode}
 \makeatletter
 \newcommand\nonterminal[1]{{%
@@ -281,10 +299,20 @@
 
 % \begin{macro}{\sterminal}
 % \changes{0.0.6}{2023/05/27}{New command \texttt{\char`\\sterminal} added, to enable rendering of special non-printable terminal symbols outside of the \texttt{ebnf} environment.}
-% Then, we a command to render a single non-terminal:
+% Then, we define a command to render a single non-terminal:
 %    \begin{macrocode}
 \makeatletter
 \newcommand\sterminal[1]{{\relax\ifmmode\else\ttfamily\fi#1}}%
+\makeatother
+%    \end{macrocode}
+% \end{macro}
+
+% \begin{macro}{\sterminal}
+% \changes{0.0.8}{2023/07/11}{New command \texttt{\char`\\regexp} added, to enable rendering of regular expresions outside of the \texttt{ebnf} environment.}
+% Then, we define a command to render a regular expression:
+%    \begin{macrocode}
+\makeatletter
+\newcommand\regexp[1]{{\relax\ifmmode\else\ttfamily\fi/#1/}}%
 \makeatother
 %    \end{macrocode}
 % \end{macro}
@@ -313,6 +341,11 @@
   \tl_set:Nn \l_ebnf_tl {}
   \tl_set_rescan:Nnn \l_ebnf_tl {} { #1 }
   \nonterminal{\l_ebnf_tl}
+}
+\newcommand\ebnf@regexp[1]{
+  \tl_set:Nn \l_ebnf_tl {}
+  \tl_set_rescan:Nnn \l_ebnf_tl {} { #1 }
+  \regexp{\l_ebnf_tl}
 }
 \ExplSyntaxOff
 \newcommand\ebnf@to
@@ -351,6 +384,8 @@
     {\c{ebnf@terminal}{\1}} \l__ebnf_tmp_tl%
   \regex_replace_all:nnN { '(.+?)' }%
     {\c{ebnf@sterminal}{\1}} \l__ebnf_tmp_tl%
+  \regex_replace_all:nnN { /(.+?)/ }%
+    {\c{ebnf@regexp}{\1}} \l__ebnf_tmp_tl%
   \regex_replace_all:nnN { \|(\|) }%
     {\c{makebox}[#1][r]{ \1 }} \l__ebnf_tmp_tl%
   \regex_replace_all:nnN { \| }%
