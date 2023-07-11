@@ -47,6 +47,7 @@
 
 
 
+
 \RequirePackage{pgfopts}
 \pgfkeys{
   /ebnf/.cd,
@@ -135,11 +136,11 @@
   \regex_replace_all:nnN { ([^\ ])'([^\ ]) } {\1\\textquotesingle{}\2} \l__ebnf_tmp_tl%
   \regex_replace_all:nnN { ([^\ ])\|([^\ ]) } {\1\\textbar{}\2} \l__ebnf_tmp_tl%
   %
-  \regex_replace_all:nnN { \{\ (.+?)\ \} }%
+  \regex_replace_all:nnN { \{\ ([^\}\{]+?)\ \} }%
     {\c{ebnf@repetition}{\1}} \l__ebnf_tmp_tl%
-  \regex_replace_all:nnN { \(\ (.+?)\ \) }%
+  \regex_replace_all:nnN { \(\ ([^)(]+?)\ \) }%
     {\c{ebnf@grouping}{\1}} \l__ebnf_tmp_tl%
-  \regex_replace_all:nnN { \[\ (.+?)\ \] }%
+  \regex_replace_all:nnN { \[\ ([^\]\[]+?)\ \] }%
     {\c{ebnf@optional}{\1}} \l__ebnf_tmp_tl%
   \regex_replace_all:nnN { (<[^>]+?>\ :=) }%
     {\c{makebox}[#1][r]{\1}} \l__ebnf_tmp_tl%
