@@ -198,7 +198,7 @@
 % \end{docshot}
 
 % Special symbols are interpreted correctly, if they stay inside quotes:
-% \docshotOptions{}
+% \docshotOptions{firstline=5,lastline=9}
 % \begin{docshot}
 % \documentclass{minimal}
 % \usepackage[T1]{fontenc}
@@ -208,6 +208,21 @@
 % <X> := 'EOL' "'" "|" \\
 % <Y> := ">" "<" "[" "]" "/" "/" \\
 % <Z> := "\LaTeX" "\textdollar" \\
+% \end{ebnf}
+% \end{document}
+% \end{docshot}
+
+% Nested brackets work fine too:
+% \docshotOptions{firstline=5,lastline=9}
+% \begin{docshot}
+% \documentclass{minimal}
+% \usepackage[T1]{fontenc}
+% \usepackage{naive-ebnf}
+% \begin{document}\noindent
+% \begin{ebnf}[1.5in]
+% <x> := ( "x" ( "y" | ( "z" | <z> ) ) ) \\
+% <y> := [ [ "x" ] "y" ( <x> | <z> ) ] \\
+% <z> := { { { <x> } <y> } <z> } \\
 % \end{ebnf}
 % \end{document}
 % \end{docshot}
@@ -379,11 +394,11 @@
   \regex_replace_all:nnN { ([^\ ])'([^\ ]) } {\1\\textquotesingle{}\2} \l__ebnf_tmp_tl%
   \regex_replace_all:nnN { ([^\ ])\|([^\ ]) } {\1\\textbar{}\2} \l__ebnf_tmp_tl%
   %
-  \regex_replace_all:nnN { \{\ (.+?)\ \} }%
+  \regex_replace_all:nnN { \{\ ([^\}\{]+?)\ \} }%
     {\c{ebnf@repetition}{\1}} \l__ebnf_tmp_tl%
-  \regex_replace_all:nnN { \(\ (.+?)\ \) }%
+  \regex_replace_all:nnN { \(\ ([^)(]+?)\ \) }%
     {\c{ebnf@grouping}{\1}} \l__ebnf_tmp_tl%
-  \regex_replace_all:nnN { \[\ (.+?)\ \] }%
+  \regex_replace_all:nnN { \[\ ([^\]\[]+?)\ \] }%
     {\c{ebnf@optional}{\1}} \l__ebnf_tmp_tl%
   \regex_replace_all:nnN { (<[^>]+?>\ :=) }%
     {\c{makebox}[#1][r]{\1}} \l__ebnf_tmp_tl%
