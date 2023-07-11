@@ -394,12 +394,15 @@
   \regex_replace_all:nnN { ([^\ ])'([^\ ]) } {\1\\textquotesingle{}\2} \ebnf_tmp%
   \regex_replace_all:nnN { ([^\ ])\|([^\ ]) } {\1\\textbar{}\2} \ebnf_tmp%
   %
-  \regex_replace_all:nnN { \{\ ([^\}\{]+?)\ \} }%
-    {\c{ebnf@repetition}{\1}} \ebnf_tmp%
-  \regex_replace_all:nnN { \(\ ([^)(]+?)\ \) }%
-    {\c{ebnf@grouping}{\1}} \ebnf_tmp%
-  \regex_replace_all:nnN { \[\ ([^\]\[]+?)\ \] }%
-    {\c{ebnf@optional}{\1}} \ebnf_tmp%
+  \cs_new:Npn\ebnf_curled{\regex_replace_all:nnNT { \{\ ([^\}\{]+?)\ \} }%
+    {\c{ebnf@repetition}{\1}} \ebnf_tmp \ebnf_curled}%
+  \ebnf_curled%
+  \cs_new:Npn\ebnf_brackets{\regex_replace_all:nnNT { \(\ ([^)(]+?)\ \) }%
+    {\c{ebnf@grouping}{\1}} \ebnf_tmp \ebnf_brackets}%
+  \ebnf_brackets%
+  \cs_new:Npn\ebnf_squares{\regex_replace_all:nnNT { \[\ ([^\]\[]+?)\ \] }%
+    {\c{ebnf@optional}{\1}} \ebnf_tmp \ebnf_squares}%
+  \ebnf_squares%
   \regex_replace_all:nnN { (<[^>]+?>\ :=) }%
     {\c{makebox}[#1][r]{\1}} \ebnf_tmp%
   \regex_replace_all:nnN { <(.+?)> }%
