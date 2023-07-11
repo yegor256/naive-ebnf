@@ -65,7 +65,7 @@
 \makeatother
 
 \makeatletter
-\newcommand\terminal[1]{{%
+\newcommand\EbnfTerminal[1]{{%
   \relax\ifmmode\else\ttfamily\fi%
   \ebnf@color{gray}{\relax\ifmmode\textsf{``}\else{\sffamily``}\fi}%
   #1%
@@ -73,18 +73,18 @@
 \makeatother
 
 \makeatletter
-\newcommand\nonterminal[1]{{%
+\newcommand\EbnfNonTerminal[1]{{%
   \ebnf@color{gray}{\relax\ifmmode\langle\else\(\langle\)\fi}%
   \relax\ifmmode\textsf{#1}\else{\sffamily#1}\fi%
   \ebnf@color{gray}{\relax\ifmmode\rangle\else\(\rangle\)\fi}}}
 \makeatother
 
 \makeatletter
-\newcommand\sterminal[1]{{\relax\ifmmode\else\ttfamily\fi#1}}%
+\newcommand\EbnfSpecial[1]{{\relax\ifmmode\else\ttfamily\fi#1}}%
 \makeatother
 
 \makeatletter
-\newcommand\regexp[1]{{\relax\ifmmode\else\ttfamily\fi/#1/}}%
+\newcommand\EbnfRegex[1]{{\relax\ifmmode\else\ttfamily\fi/#1/}}%
 \makeatother
 
 \makeatletter
@@ -98,22 +98,22 @@
 \newcommand\ebnf@terminal[1]{
   \tl_set:Nn \l_ebnf_tl {}
   \tl_set_rescan:Nnn \l_ebnf_tl {} { #1 }
-  \terminal{\l_ebnf_tl}
+  \EbnfTerminal{\l_ebnf_tl}
 }
-\newcommand\ebnf@sterminal[1]{
+\newcommand\ebnf@special[1]{
   \tl_set:Nn \l_ebnf_tl {}
   \tl_set_rescan:Nnn \l_ebnf_tl {} { #1 }
-  \sterminal{\l_ebnf_tl}
+  \EbnfSpecial{\l_ebnf_tl}
 }
 \newcommand\ebnf@nonterminal[1]{
   \tl_set:Nn \l_ebnf_tl {}
   \tl_set_rescan:Nnn \l_ebnf_tl {} { #1 }
-  \nonterminal{\l_ebnf_tl}
+  \EbnfNonTerminal{\l_ebnf_tl}
 }
 \newcommand\ebnf@regexp[1]{
   \tl_set:Nn \l_ebnf_tl {}
   \tl_set_rescan:Nnn \l_ebnf_tl {} { #1 }
-  \regexp{\l_ebnf_tl}
+  \EbnfRegex{\l_ebnf_tl}
 }
 \ExplSyntaxOff
 \newcommand\ebnf@to
@@ -146,7 +146,7 @@
   \regex_replace_all:nnN { "(.+?)" }%
     {\c{ebnf@terminal}{\1}} \l__ebnf_tmp_tl%
   \regex_replace_all:nnN { '(.+?)' }%
-    {\c{ebnf@sterminal}{\1}} \l__ebnf_tmp_tl%
+    {\c{ebnf@special}{\1}} \l__ebnf_tmp_tl%
   \regex_replace_all:nnN { /(.+?)/ }%
     {\c{ebnf@regexp}{\1}} \l__ebnf_tmp_tl%
   \regex_replace_all:nnN { \|(\|) }%
