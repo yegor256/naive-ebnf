@@ -386,47 +386,47 @@
 \cs_generate_variant:Nn \tl_replace_all:Nnn {Nx}
 \makeatletter
 \NewDocumentEnvironment{ebnf}{O{4em}+b}
-  {\tl_set:Nn\l__ebnf_tmp_tl{#2}}
+  {\tl_set:Nn\ebnf_tmp{#2}}
   {%
-  \regex_replace_all:nnN { ([^\ ])/([^\ ]) } {\1\\slash{}\2} \l__ebnf_tmp_tl%
-  \regex_replace_all:nnN { ([^\ ])< } {\1\\textless{}} \l__ebnf_tmp_tl%
-  \regex_replace_all:nnN { >([^\ ]) } {\\textgreater{}\1} \l__ebnf_tmp_tl%
-  \regex_replace_all:nnN { ([^\ ])'([^\ ]) } {\1\\textquotesingle{}\2} \l__ebnf_tmp_tl%
-  \regex_replace_all:nnN { ([^\ ])\|([^\ ]) } {\1\\textbar{}\2} \l__ebnf_tmp_tl%
+  \regex_replace_all:nnN { ([^\ ])/([^\ ]) } {\1\\slash{}\2} \ebnf_tmp%
+  \regex_replace_all:nnN { ([^\ ])< } {\1\\textless{}} \ebnf_tmp%
+  \regex_replace_all:nnN { >([^\ ]) } {\\textgreater{}\1} \ebnf_tmp%
+  \regex_replace_all:nnN { ([^\ ])'([^\ ]) } {\1\\textquotesingle{}\2} \ebnf_tmp%
+  \regex_replace_all:nnN { ([^\ ])\|([^\ ]) } {\1\\textbar{}\2} \ebnf_tmp%
   %
   \regex_replace_all:nnN { \{\ ([^\}\{]+?)\ \} }%
-    {\c{ebnf@repetition}{\1}} \l__ebnf_tmp_tl%
+    {\c{ebnf@repetition}{\1}} \ebnf_tmp%
   \regex_replace_all:nnN { \(\ ([^)(]+?)\ \) }%
-    {\c{ebnf@grouping}{\1}} \l__ebnf_tmp_tl%
+    {\c{ebnf@grouping}{\1}} \ebnf_tmp%
   \regex_replace_all:nnN { \[\ ([^\]\[]+?)\ \] }%
-    {\c{ebnf@optional}{\1}} \l__ebnf_tmp_tl%
+    {\c{ebnf@optional}{\1}} \ebnf_tmp%
   \regex_replace_all:nnN { (<[^>]+?>\ :=) }%
-    {\c{makebox}[#1][r]{\1}} \l__ebnf_tmp_tl%
+    {\c{makebox}[#1][r]{\1}} \ebnf_tmp%
   \regex_replace_all:nnN { <(.+?)> }%
-    {\c{ebnf@nonterminal}{\1}} \l__ebnf_tmp_tl%
+    {\c{ebnf@nonterminal}{\1}} \ebnf_tmp%
   \regex_replace_all:nnN { "(.+?)" }%
-    {\c{ebnf@terminal}{\1}} \l__ebnf_tmp_tl%
+    {\c{ebnf@terminal}{\1}} \ebnf_tmp%
   \regex_replace_all:nnN { '(.+?)' }%
-    {\c{ebnf@special}{\1}} \l__ebnf_tmp_tl%
+    {\c{ebnf@special}{\1}} \ebnf_tmp%
   \regex_replace_all:nnN { /(.+?)/ }%
-    {\c{ebnf@regexp}{\1}} \l__ebnf_tmp_tl%
+    {\c{ebnf@regexp}{\1}} \ebnf_tmp%
   \regex_replace_all:nnN { \|(\|) }%
-    {\c{makebox}[#1][r]{ \1 }} \l__ebnf_tmp_tl%
+    {\c{makebox}[#1][r]{ \1 }} \ebnf_tmp%
   \regex_replace_all:nnN { \| }%
-    {\c{ebnf@alternation}{}} \l__ebnf_tmp_tl%
+    {\c{ebnf@alternation}{}} \ebnf_tmp%
   \regex_replace_all:nnN { := }%
-    {\c{ebnf@to}{}} \l__ebnf_tmp_tl%
-  \tl_put_left:Nn \l__ebnf_tmp_tl {\noindent}
-  \tl_put_right:Nn \l__ebnf_tmp_tl {}
+    {\c{ebnf@to}{}} \ebnf_tmp%
+  \tl_put_left:Nn \ebnf_tmp {\noindent}
+  \tl_put_right:Nn \ebnf_tmp {}
   \ifdefined\ebnf@trail%
     \newwrite\ebnf@write%
     \immediate\openout\ebnf@write\ebnf@trail\relax%
-    \immediate\write\ebnf@write{\unexpanded\expandafter{\l__ebnf_tmp_tl}}%
+    \immediate\write\ebnf@write{\unexpanded\expandafter{\ebnf_tmp}}%
     \immediate\closeout\ebnf@write%
     \message{naive-ebnf:\space pre-processed\space TeX
       \space saved\space to\space "\ebnf@trail"^^J}%
   \fi%
-  \l__ebnf_tmp_tl}
+  \ebnf_tmp}
 \makeatother
 \ExplSyntaxOff
 %    \end{macrocode}
