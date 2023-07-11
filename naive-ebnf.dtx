@@ -92,7 +92,7 @@
 % \begin{ebnf}
 % <$\lambda$-Expr> := <Var> \\
 %   || "$\lambda$" <Var> "." <Expr> \\
-%   || "$\lparen$" <Expr> <Expr> "$\rparen$"
+%   || "\char`\(" <Expr> <Expr> "\char`\)"
 % \end{ebnf}
 % \end{document}
 % \end{docshot}
@@ -119,6 +119,14 @@
 % \item |$\lbrace$| and |$\rbrace$| instead of ``|{|'' and ``|}|'' (also |mathtools|);
 % \item |$\lbrack$| and |$\rbrack$| instead of ``|[|'' and ``|]|'' (also |mathtools|);
 % \item |$\vert$| instead of ``\texttt{\char`\|}''.
+% \end{itemize}
+
+% They would look even better, if the following notation is used:
+% \begin{itemize}
+% \item |\char`\(| and |\char`\)| instead of ``|(|'' and ``|)|'';
+% \item |\char`\<| and |\char`\>| instead of ``|<|'' and ``|>|'';
+% \item |\char`\{| and |\char`\}| instead of ``|{|'' and ``|}|'';
+% \item |\char`\[| and |\char`\]| instead of ``|[|'' and ``|]|''.
 % \end{itemize}
 
 % \DescribeMacro{width}
