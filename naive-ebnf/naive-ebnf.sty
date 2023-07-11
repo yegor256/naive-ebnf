@@ -45,6 +45,7 @@
 
 
 
+
 \RequirePackage{pgfopts}
 \pgfkeys{
   /ebnf/.cd,
@@ -83,6 +84,10 @@
 \makeatother
 
 \makeatletter
+\newcommand\regexp[1]{{\relax\ifmmode\else\ttfamily\fi/#1/}}%
+\makeatother
+
+\makeatletter
 \newcommand\ebnf@optional[1]
   {\ebnf@color{gray}{[}#1\ebnf@color{gray}{]}}
 \newcommand\ebnf@repetition[1]
@@ -104,6 +109,11 @@
   \tl_set:Nn \l_ebnf_tl {}
   \tl_set_rescan:Nnn \l_ebnf_tl {} { #1 }
   \nonterminal{\l_ebnf_tl}
+}
+\newcommand\ebnf@regexp[1]{
+  \tl_set:Nn \l_ebnf_tl {}
+  \tl_set_rescan:Nnn \l_ebnf_tl {} { #1 }
+  \regexp{\l_ebnf_tl}
 }
 \ExplSyntaxOff
 \newcommand\ebnf@to
@@ -137,6 +147,8 @@
     {\c{ebnf@terminal}{\1}} \l__ebnf_tmp_tl%
   \regex_replace_all:nnN { '(.+?)' }%
     {\c{ebnf@sterminal}{\1}} \l__ebnf_tmp_tl%
+  \regex_replace_all:nnN { /(.+?)/ }%
+    {\c{ebnf@regexp}{\1}} \l__ebnf_tmp_tl%
   \regex_replace_all:nnN { \|(\|) }%
     {\c{makebox}[#1][r]{ \1 }} \l__ebnf_tmp_tl%
   \regex_replace_all:nnN { \| }%
