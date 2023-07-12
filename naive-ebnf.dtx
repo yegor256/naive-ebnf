@@ -79,6 +79,9 @@
 %
 % \maketitle
 %
+% \textbf{\color{red}NB!}
+% Large ENBF snippets may take too long to render!
+%
 % \section{Introduction}
 %
 % This package helps render an
@@ -221,7 +224,7 @@
 % \begin{document}\noindent
 % \begin{ebnf}[1.5in]
 % <x> := ( "x" ( "y" | ( "z" | <z> ) ) ) \\
-% <y> := [ [ "x" ] /[a-z]+/ ] \\
+% <y> := [ [ "x" ] { /[a-z]+/ } ] \\
 % <z> := { { { <x> } <y> } <z> } \\
 % \end{ebnf}
 % \end{document}
@@ -394,8 +397,8 @@
   \regex_replace_all:nnN { ([^\ ])'([^\ ]) } {\1\\textquotesingle{}\2} \ebnf_tmp%
   \regex_replace_all:nnN { ([^\ ])\|([^\ ]) } {\1\\textbar{}\2} \ebnf_tmp%
   %
-  \regex_replace_all:nnN { (\ )/(.+?)/(\ ) }%
-    {\1\c{ebnf@regexp}{\2}\3} \ebnf_tmp%
+  \regex_replace_all:nnN { \ /(.+?)/\  }%
+    {\c{ebnf@regexp}{\1}} \ebnf_tmp%
   \cs_new:Npn\ebnf_curled{\regex_replace_all:nnNT { \{\ (([^\ ]*( [^\}\{]|\ (\}|\{)[^\ ])?)*)\ \} }%
     {\c{ebnf@repetition}{\1}} \ebnf_tmp \ebnf_curled}%
   \ebnf_curled%
