@@ -393,11 +393,16 @@
 \NewDocumentEnvironment{ebnf}{O{4em}+b}
   {\tl_set:Nn\ebnf_tmp{#2}}
   {%
-  \regex_replace_all:nnN { ([^\ ])/([^\ ]) } {\1\\slash{}\2} \ebnf_tmp%
-  \regex_replace_all:nnN { ([^\ ])< } {\1\\textless{}} \ebnf_tmp%
-  \regex_replace_all:nnN { >([^\ ]) } {\\textgreater{}\1} \ebnf_tmp%
-  \regex_replace_all:nnN { ([^\ ])'([^\ ]) } {\1\\textquotesingle{}\2} \ebnf_tmp%
-  \regex_replace_all:nnN { ([^\ ])\|([^\ ]) } {\1\\textbar{}\2} \ebnf_tmp%
+  \regex_replace_all:nnN
+    { ([^\ ])/([^\ ]) } {\1\\slash{}\2} \ebnf_tmp%
+  \regex_replace_all:nnN
+    { ([^\ ])< } {\1\\textless{}} \ebnf_tmp%
+  \regex_replace_all:nnN
+    { >([^\ ]) } {\\textgreater{}\1} \ebnf_tmp%
+  \regex_replace_all:nnN
+    { ([^\ ])'([^\ ]) } {\1\\textquotesingle{}\2} \ebnf_tmp%
+  \regex_replace_all:nnN
+    { ([^\ ])\|([^\ ]) } {\1\\textbar{}\2} \ebnf_tmp%
   %
   \regex_replace_all:nnN { \ /(.+?)/\  }%
     {\c{ebnf@regexp}{\1}} \ebnf_tmp%
