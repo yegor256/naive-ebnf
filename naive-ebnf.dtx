@@ -185,7 +185,7 @@
 
 % \DescribeMacro{\EbnfRegex}
 % A regular expression is possible too:
-% \docshotOptions{firstline=6,lastline=10}
+% \docshotOptions{firstline=6,lastline=11}
 % \begin{docshot}
 % \documentclass{article}
 % \pagestyle{empty}
@@ -193,6 +193,7 @@
 % \usepackage{naive-ebnf}
 % \begin{document}
 % \begin{ebnf}[1.5in]
+% <data> := <bool> | <integer> | <byte> \\
 % <bool> := "TRUE" | "FALSE" \\
 % <integer> := /(+\char`\|-)?[0-9]+/ \\
 % <byte> := /[0-9a-f]\char`\{2\char`\}/ \\
