@@ -1,6 +1,2 @@
 This is a generated file for the l3build validation system.
 Don't change this file in any respect.
-! Interruption.
-\__intarray_range_to_clist:ww ..._int_compare:w #1
-                                                  >#2\exp_stop_f: \prg_break...
-l. ...\end{ebnf}
