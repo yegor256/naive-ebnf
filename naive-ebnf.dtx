@@ -225,8 +225,9 @@
 % \begin{document}
 % \begin{ebnf}[1.5in]
 % <x> := ( "x" ( "y" | ( "z" | <z> ) ) ) \\
-% <y> := [ [ "x" ] { /[a-z]+/ } ] \\
+% <y> := [ [ "x1" ] { /[a-z]+/ } ] \\
 % <z> := { { { <x> } <y> } <z> } \\
+% <t> := [ <x> ] [ <y> ] \\
 % \end{ebnf}
 % \end{document}
 % \end{docshot}
@@ -400,13 +401,13 @@
   %
   \regex_replace_all:nnN { \ /(.+?)/\  }%
     {\c{ebnf@regexp}{\1}} \ebnf_tmp%
-  \cs_new:Npn\ebnf_curled{\regex_replace_all:nnNT { \{\ (([^\ ]*( [^\}\{]|\ (\}|\{)[^\ ])?)*)\ \} }%
+  \cs_new:Npn\ebnf_curled{\regex_replace_all:nnNT { \{\ (([^\ ]*(\ [^\}\{]|\ (\}|\{)[^\ ])?)*)\ \} }%
     {\c{ebnf@repetition}{\1}} \ebnf_tmp \ebnf_curled}%
   \ebnf_curled%
-  \cs_new:Npn\ebnf_brackets{\regex_replace_all:nnNT { \(\ (([^\ ]*( [^\)\(]|\ (\)|\()[^\ ])?)*)\ \) }%
+  \cs_new:Npn\ebnf_brackets{\regex_replace_all:nnNT { \(\ (([^\ ]*(\ [^\)\(]|\ (\)|\()[^\ ])?)*)\ \) }%
     {\c{ebnf@grouping}{\1}} \ebnf_tmp \ebnf_brackets}%
   \ebnf_brackets%
-  \cs_new:Npn\ebnf_squares{\regex_replace_all:nnNT { \[\ (([^\ ]*( [^\]\[]|\ (\]|\[)[^\ ])?)*)\ \] }%
+  \cs_new:Npn\ebnf_squares{\regex_replace_all:nnNT { \[\ (([^\ ]*(\ [^\]\[]|\ (\]|\[)[^\ ])?)*)\ \] }%
     {\c{ebnf@optional}{\1}} \ebnf_tmp \ebnf_squares}%
   \ebnf_squares%
   \regex_replace_all:nnN { (<[^>]+?>\ :=) }%
