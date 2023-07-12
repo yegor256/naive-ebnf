@@ -5,7 +5,7 @@ install: |-
   sudo gem install texqc:0.6.0
   sudo tlmgr option repository ctan
   sudo tlmgr --verify-repo=none update --self
-  sudo tlmgr --verify-repo=none install l3build
+  sudo tlmgr --verify-repo=none install l3build iexec href-ul etoolbox docshots mathtools libertine
   sudo tlmgr --verify-repo=none update iexec href-ul etoolbox docshots mathtools libertine
 merge:
   script: |-
@@ -16,7 +16,7 @@ release:
     l3build tag ${tag}
     l3build ctan --show-log-on-error || echo fail
     cat build/doc/naive-ebnf.log
-    exit
+    exit -1
     texsc
     texqc
     git commit -am "version set to ${tag}"
