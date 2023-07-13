@@ -130,30 +130,35 @@
 \NewDocumentEnvironment{ebnf}{O{4em}+b}
   {\tl_set:Nn\ebnf_tmp{#2}}
   {%
-  \regex_replace_all:nnN { ([^\ ])/([^\ ]) } {\1\\slash{}\2} \ebnf_tmp%
-  \regex_replace_all:nnN { ([^\ ])< } {\1\\textless{}} \ebnf_tmp%
-  \regex_replace_all:nnN { >([^\ ]) } {\\textgreater{}\1} \ebnf_tmp%
-  \regex_replace_all:nnN { ([^\ ])'([^\ ]) } {\1\\textquotesingle{}\2} \ebnf_tmp%
-  \regex_replace_all:nnN { ([^\ ])\|([^\ ]) } {\1\\textbar{}\2} \ebnf_tmp%
+  \regex_replace_all:nnN
+    { ([^\s])/([^\s]) } {\1\\slash{}\2} \ebnf_tmp%
+  \regex_replace_all:nnN
+    { ([^\s])< } {\1\\textless{}} \ebnf_tmp%
+  \regex_replace_all:nnN
+    { >([^\s]) } {\\textgreater{}\1} \ebnf_tmp%
+  \regex_replace_all:nnN
+    { ([^\s])'([^\s]) } {\1\\textquotesingle{}\2} \ebnf_tmp%
+  \regex_replace_all:nnN
+    { ([^\s])\|([^\s]) } {\1\\textbar{}\2} \ebnf_tmp%
   %
-  \regex_replace_all:nnN { \ /(.+?)/\  }%
+  \regex_replace_all:nnN { \s/(.+?)/\s }%
     {\c{ebnf@regexp}{\1}} \ebnf_tmp%
   \cs_new:Npn\ebnf_curled{%
     \regex_replace_all:nnNT
-    { \{\ (([^\ ]*(\ [^\}\{]|\ (\}|\{)[^\ ])?)*)\ \} }%
+    { \{\s(([^\s]*(\s[^\}\{]|\s(\}|\{)[^\s])?)*)\s\} }%
     {\c{ebnf@repetition}{\1}} \ebnf_tmp \ebnf_curled}%
   \ebnf_curled%
   \cs_new:Npn\ebnf_brackets{%
     \regex_replace_all:nnNT
-    { \(\ (([^\ ]*(\ [^\)\(]|\ (\)|\()[^\ ])?)*)\ \) }%
+    { \(\s(([^\s]*(\s[^\)\(]|\s(\)|\()[^\s])?)*)\s\) }%
     {\c{ebnf@grouping}{\1}} \ebnf_tmp \ebnf_brackets}%
   \ebnf_brackets%
   \cs_new:Npn\ebnf_squares{%
     \regex_replace_all:nnNT
-    { \[\ (([^\ ]*(\ [^\]\[]|\ (\]|\[)[^\ ])?)*)\ \] }%
+    { \[\s(([^\s]*(\s[^\]\[]|\s(\]|\[)[^\s])?)*)\s\] }%
     {\c{ebnf@optional}{\1}} \ebnf_tmp \ebnf_squares}%
   \ebnf_squares%
-  \regex_replace_all:nnN { (<[^>]+?>\ :=) }%
+  \regex_replace_all:nnN { (<[^>]+?>\s:=) }%
     {\c{makebox}[#1][r]{\1}} \ebnf_tmp%
   \regex_replace_all:nnN { <(.+?)> }%
     {\c{ebnf@nonterminal}{\1}} \ebnf_tmp%
