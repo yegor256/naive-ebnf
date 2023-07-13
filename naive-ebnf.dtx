@@ -192,7 +192,7 @@
 % \usepackage[paperwidth=4in]{geometry}
 % \usepackage{naive-ebnf}
 % \begin{document}
-% \begin{ebnf}[1.5in]
+% \begin{ebnf}
 % <data> := <bool> | <integer> | <byte> \\
 % <bool> := "TRUE" | "FALSE" \\
 % <integer> := /(+\char`\|-)?[0-9]+/ \\
@@ -208,7 +208,7 @@
 % \usepackage[T1]{fontenc}
 % \usepackage{naive-ebnf}
 % \begin{document}
-% \begin{ebnf}[1.5in]
+% \begin{ebnf}
 % <X> := 'EOL' "'" "|" \\
 % <Y> := ">" "<" "[" "]" "/" "/" \\
 % <Z> := "\LaTeX" "\textdollar" \\
@@ -217,13 +217,14 @@
 % \end{docshot}
 
 % Nested brackets work fine too:
-% \docshotOptions{firstline=5,lastline=10}
+% \docshotOptions{firstline=5,lastline=11}
 % \begin{docshot}
 % \documentclass{minimal}
 % \usepackage[T1]{fontenc}
 % \usepackage{naive-ebnf}
 % \begin{document}
-% \begin{ebnf}[1.5in]
+% \begin{ebnf}
+% % There is no meaning in this:
 % <x> := ( "x" ( "y" | ( "z" | <z> ) ) ) \\
 % <y> := [ [ "x1" ] { /[a-z]+/ } ] \\
 % <z> := { { { <x> } <y> } <z> } \\
@@ -395,34 +396,34 @@
   {\tl_set:Nn\ebnf_tmp{#2}}
   {%
   \regex_replace_all:nnN
-    { ([^\ ])/([^\ ]) } {\1\\slash{}\2} \ebnf_tmp%
+    { ([^\s])/([^\s]) } {\1\\slash{}\2} \ebnf_tmp%
   \regex_replace_all:nnN
-    { ([^\ ])< } {\1\\textless{}} \ebnf_tmp%
+    { ([^\s])< } {\1\\textless{}} \ebnf_tmp%
   \regex_replace_all:nnN
-    { >([^\ ]) } {\\textgreater{}\1} \ebnf_tmp%
+    { >([^\s]) } {\\textgreater{}\1} \ebnf_tmp%
   \regex_replace_all:nnN
-    { ([^\ ])'([^\ ]) } {\1\\textquotesingle{}\2} \ebnf_tmp%
+    { ([^\s])'([^\s]) } {\1\\textquotesingle{}\2} \ebnf_tmp%
   \regex_replace_all:nnN
-    { ([^\ ])\|([^\ ]) } {\1\\textbar{}\2} \ebnf_tmp%
+    { ([^\s])\|([^\s]) } {\1\\textbar{}\2} \ebnf_tmp%
   %
-  \regex_replace_all:nnN { \ /(.+?)/\  }%
+  \regex_replace_all:nnN { \s/(.+?)/\s }%
     {\c{ebnf@regexp}{\1}} \ebnf_tmp%
   \cs_new:Npn\ebnf_curled{%
     \regex_replace_all:nnNT
-    { \{\ (([^\ ]*(\ [^\}\{]|\ (\}|\{)[^\ ])?)*)\ \} }%
+    { \{\s(([^\s]*(\s[^\}\{]|\s(\}|\{)[^\s])?)*)\s\} }%
     {\c{ebnf@repetition}{\1}} \ebnf_tmp \ebnf_curled}%
   \ebnf_curled%
   \cs_new:Npn\ebnf_brackets{%
     \regex_replace_all:nnNT
-    { \(\ (([^\ ]*(\ [^\)\(]|\ (\)|\()[^\ ])?)*)\ \) }%
+    { \(\s(([^\s]*(\s[^\)\(]|\s(\)|\()[^\s])?)*)\s\) }%
     {\c{ebnf@grouping}{\1}} \ebnf_tmp \ebnf_brackets}%
   \ebnf_brackets%
   \cs_new:Npn\ebnf_squares{%
     \regex_replace_all:nnNT
-    { \[\ (([^\ ]*(\ [^\]\[]|\ (\]|\[)[^\ ])?)*)\ \] }%
+    { \[\s(([^\s]*(\s[^\]\[]|\s(\]|\[)[^\s])?)*)\s\] }%
     {\c{ebnf@optional}{\1}} \ebnf_tmp \ebnf_squares}%
   \ebnf_squares%
-  \regex_replace_all:nnN { (<[^>]+?>\ :=) }%
+  \regex_replace_all:nnN { (<[^>]+?>\s:=) }%
     {\c{makebox}[#1][r]{\1}} \ebnf_tmp%
   \regex_replace_all:nnN { <(.+?)> }%
     {\c{ebnf@nonterminal}{\1}} \ebnf_tmp%
