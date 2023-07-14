@@ -185,7 +185,7 @@
 
 % \DescribeMacro{\EbnfRegex}
 % A regular expression is possible too:
-% \docshotOptions{firstline=6,lastline=11}
+% \docshotOptions{firstline=6,lastline=12}
 % \begin{docshot}
 % \documentclass{article}
 % \pagestyle{empty}
@@ -197,6 +197,7 @@
 % <bool> := "TRUE" | "FALSE" \\
 % <integer> := /(+\char`\|-)?[0-9]+/ \\
 % <byte> := /[0-9a-f]\char`\{2\char`\}/ \\
+% <number> := /[1-9]+/ /[0-9]+/
 % \end{ebnf}
 % \end{document}
 % \end{docshot}
@@ -406,7 +407,8 @@
   \regex_replace_all:nnN
     { ([^\s])\|([^\s]) } {\1\\textbar{}\2} \ebnf_tmp%
   %
-  \regex_replace_all:nnN { \s/(.+?)/\s }%
+  \regex_replace_all:nnN
+    { /(.+?)/ }%
     {\c{ebnf@regexp}{\1}} \ebnf_tmp%
   \cs_new:Npn\ebnf_curled{%
     \regex_replace_all:nnNT
