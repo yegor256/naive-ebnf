@@ -141,7 +141,8 @@
   \regex_replace_all:nnN
     { ([^\s])\|([^\s]) } {\1\\textbar{}\2} \ebnf_tmp%
   %
-  \regex_replace_all:nnN { \s/(.+?)/\s }%
+  \regex_replace_all:nnN
+    { /(.+?)/ }%
     {\c{ebnf@regexp}{\1}} \ebnf_tmp%
   \cs_new:Npn\ebnf_curled{%
     \regex_replace_all:nnNT
