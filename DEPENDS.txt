@@ -1,2 +1,16 @@
-hard pgfopts
 hard expl3
+hard pgfopts
+soft docshots
+soft etoolbox
+soft filecontentsdef
+soft href-ul
+soft hypdoc
+soft iexec
+soft l3build
+soft libertine
+soft mathtools
+soft microtype
+soft newtx
+soft pgfopts
+soft scheme-basic
+soft xetex
