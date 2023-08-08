@@ -1,4 +1,3 @@
-hard expl3
 hard pgfopts
 soft docshots
 soft etoolbox
