@@ -112,6 +112,7 @@
 % \item |/.../| denotes a regular expression, like |/[a-z]+/|;
 % \item |[...]| denotes an optional substitution;
 % \item |{...}| denotes a zero or more times repetition;
+% \item |{...}+| denotes one or more times repetition;
 % \item \texttt{\char`\|\char`\|} denotes an indented vertical bar at the beginning of the string.
 % \end{itemize}
 
@@ -228,7 +229,7 @@
 % % There is no meaning in this:
 % <x> := ( "x" ( "y" | ( "z" | <z> ) ) ) \\
 % <y> := [ [ "x1" ] { /[a-z]+/ } ] \\
-% <z> := { { { <x> } <y> } <z> } \\
+% <z> := { { { <x> }+ <y> } <z> } \\
 % <t> := [ <x> ] [ <y> ] \\
 % \end{ebnf}
 % \end{document}
@@ -354,6 +355,8 @@
   {\ebnf@color{gray}{[}#1\ebnf@color{gray}{]}}
 \newcommand\ebnf@repetition[1]
   {\ebnf@color{gray}{\{}#1\ebnf@color{gray}{\}}}
+\newcommand\ebnf@iteration[1]
+  {\ebnf@color{gray}{\{}#1\ebnf@color{gray}{\}\(^{\scriptscriptstyle +}\)}}
 \newcommand\ebnf@grouping[1]
   {\ebnf@color{gray}{(}#1\ebnf@color{gray}{)}}
 \ExplSyntaxOn
@@ -388,6 +391,7 @@
 % \begin{macro}{ebnf}
 % \changes{0.0.4}{2023/02/03}{Any symbols are allowed inside \texttt{\char`\\EbnfNonTerminal} commands and inside the \texttt{ebnf} environment, where non-terminals are mentioned.}
 % \changes{0.0.11}{2023/07/12}{Many bugs fixed in the area of regular expression matching.}
+% \changes{0.0.14}{2023/08/08}{One-or-more repetition introduced with \texttt{\char`\{...\char`\}+} syntax.}
 % Then, we define the |ebnf| environment:
 %    \begin{macrocode}
 \ExplSyntaxOn
@@ -410,6 +414,11 @@
   \regex_replace_all:nnN
     { /(.+?)/ }%
     {\c{ebnf@regexp}{\1}} \ebnf_tmp%
+  \cs_new:Npn\ebnf_iterated{%
+    \regex_replace_all:nnNT
+    { \{\s(([^\s]*(\s[^\}\{]|\s(\}|\{)[^\s])?)*)\s\}\+ }%
+    {\c{ebnf@iteration}{\1}} \ebnf_tmp \ebnf_iterated}%
+  \ebnf_iterated%
   \cs_new:Npn\ebnf_curled{%
     \regex_replace_all:nnNT
     { \{\s(([^\s]*(\s[^\}\{]|\s(\}|\{)[^\s])?)*)\s\} }%
