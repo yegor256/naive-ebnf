@@ -92,10 +92,8 @@
 \makeatletter
 \newcommand\ebnf@optional[1]
   {\ebnf@color{gray}{[}#1\ebnf@color{gray}{]}}
-\newcommand\ebnf@repetition[1]
-  {\ebnf@color{gray}{\{}#1\ebnf@color{gray}{\}}}
-\newcommand\ebnf@iteration[1]
-  {\ebnf@color{gray}{\{}#1\ebnf@color{gray}{\}\(^{\scriptscriptstyle +}\)}}
+\newcommand\ebnf@repetition[2][]
+  {\ebnf@color{gray}{\{}#2\ebnf@color{gray}{\}\(^{\scriptscriptstyle #1}\)}}
 \newcommand\ebnf@grouping[1]
   {\ebnf@color{gray}{(}#1\ebnf@color{gray}{)}}
 \ExplSyntaxOn
@@ -146,15 +144,10 @@
   \regex_replace_all:nnN
     { /(.+?)/ }%
     {\c{ebnf@regexp}{\1}} \ebnf_tmp%
-  \cs_new:Npn\ebnf_iterated{%
-    \regex_replace_all:nnNT
-    { \{\s(([^\s]*(\s[^\}\{]|\s(\}|\{)[^\s])?)*)\s\}\+ }%
-    {\c{ebnf@iteration}{\1}} \ebnf_tmp \ebnf_iterated}%
-  \ebnf_iterated%
   \cs_new:Npn\ebnf_curled{%
     \regex_replace_all:nnNT
-    { \{\s(([^\s]*(\s[^\}\{]|\s(\}|\{)[^\s])?)*)\s\} }%
-    {\c{ebnf@repetition}{\1}} \ebnf_tmp \ebnf_curled}%
+    { \{\s(([^\s]*(\s[^\}\{]|\s(\}|\{)[^\s])?)*)\s\}(\+)? }%
+    {\c{ebnf@repetition}[\5]{\1}} \ebnf_tmp \ebnf_curled}%
   \ebnf_curled%
   \cs_new:Npn\ebnf_brackets{%
     \regex_replace_all:nnNT
