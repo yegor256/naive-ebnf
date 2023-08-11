@@ -229,7 +229,7 @@
 % % There is no meaning in this:
 % <x> := ( "x" ( "y" | ( "z" | <z> ) ) ) \\
 % <y> := [ [ "x1" ] { /[a-z]+/ } ] \\
-% <z> := { { { <x> }+ <y> } <z> } \\
+% <z> := { { { <x> }+ <y> } <z> }+ \\
 % <t> := [ <x> ] [ <y> ] \\
 % \end{ebnf}
 % \end{document}
@@ -353,10 +353,8 @@
 \makeatletter
 \newcommand\ebnf@optional[1]
   {\ebnf@color{gray}{[}#1\ebnf@color{gray}{]}}
-\newcommand\ebnf@repetition[1]
-  {\ebnf@color{gray}{\{}#1\ebnf@color{gray}{\}}}
-\newcommand\ebnf@iteration[1]
-  {\ebnf@color{gray}{\{}#1\ebnf@color{gray}{\}\(^{\scriptscriptstyle +}\)}}
+\newcommand\ebnf@repetition[2][]
+  {\ebnf@color{gray}{\{}#2\ebnf@color{gray}{\}\(^{\scriptscriptstyle #1}\)}}
 \newcommand\ebnf@grouping[1]
   {\ebnf@color{gray}{(}#1\ebnf@color{gray}{)}}
 \ExplSyntaxOn
@@ -392,6 +390,7 @@
 % \changes{0.0.4}{2023/02/03}{Any symbols are allowed inside \texttt{\char`\\EbnfNonTerminal} commands and inside the \texttt{ebnf} environment, where non-terminals are mentioned.}
 % \changes{0.0.11}{2023/07/12}{Many bugs fixed in the area of regular expression matching.}
 % \changes{0.0.14}{2023/08/08}{One-or-more repetition introduced with \texttt{\char`\{...\char`\}+} syntax.}
+% \changes{0.0.15}{2023/08/11}{The \texttt{iteration} removed, only \texttt{repetition} is left, with the second optional parameter.}
 % Then, we define the |ebnf| environment:
 %    \begin{macrocode}
 \ExplSyntaxOn
@@ -414,15 +413,10 @@
   \regex_replace_all:nnN
     { /(.+?)/ }%
     {\c{ebnf@regexp}{\1}} \ebnf_tmp%
-  \cs_new:Npn\ebnf_iterated{%
-    \regex_replace_all:nnNT
-    { \{\s(([^\s]*(\s[^\}\{]|\s(\}|\{)[^\s])?)*)\s\}\+ }%
-    {\c{ebnf@iteration}{\1}} \ebnf_tmp \ebnf_iterated}%
-  \ebnf_iterated%
   \cs_new:Npn\ebnf_curled{%
     \regex_replace_all:nnNT
-    { \{\s(([^\s]*(\s[^\}\{]|\s(\}|\{)[^\s])?)*)\s\} }%
-    {\c{ebnf@repetition}{\1}} \ebnf_tmp \ebnf_curled}%
+    { \{\s(([^\s]*(\s[^\}\{]|\s(\}|\{)[^\s])?)*)\s\}(\+)? }%
+    {\c{ebnf@repetition}[\5]{\1}} \ebnf_tmp \ebnf_curled}%
   \ebnf_curled%
   \cs_new:Npn\ebnf_brackets{%
     \regex_replace_all:nnNT
