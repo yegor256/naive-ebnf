@@ -407,6 +407,8 @@
     { >([^\s]) } {\\textgreater{}\1} \ebnf_tmp%
   \regex_replace_all:nnN
     { ([^\s])'([^\s]) } {\1\\textquotesingle{}\2} \ebnf_tmp%
+  \regex_replace_all:nnN { \|\|\| }%
+    {\c{makebox}[#1][r]{ }} \ebnf_tmp%
   \regex_replace_all:nnN
     { ([^\s])\|([^\s]) } {\1\\textbar{}\2} \ebnf_tmp%
   %
