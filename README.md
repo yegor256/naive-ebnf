@@ -5,10 +5,10 @@
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](https://github.com/yegor256/naive-ebnf/blob/master/LICENSE.txt)
 
 This LaTeX package helps you typeset an
-[Extended Backus-Naur Form](ENBF) (EBNF)
+[Extended Backus-Naur Form][ENBF] (EBNF)
 using plain text format.
 
-First, [install it](LaTeX)
+First, [install it][LaTeX]
 from [CTAN](https://ctan.org/pkg/naive-ebnf)
 and then use in the preamble:
 
@@ -24,7 +24,7 @@ and then use in the preamble:
 \end{document}
 ```
 
-Otherwise, you can download [`naive-ebnf.sty`](sty) and add to your project.
+Otherwise, you can download [`naive-ebnf.sty`][sty] and add to your project.
 
 ## How to Contribute
 
