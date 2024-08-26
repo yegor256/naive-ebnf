@@ -4,9 +4,8 @@
 [![CTAN](https://img.shields.io/ctan/v/naive-ebnf)](https://ctan.org/pkg/naive-ebnf)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](https://github.com/yegor256/naive-ebnf/blob/master/LICENSE.txt)
 
-This LaTeX package helps you typeset an
-[Extended Backus-Naur Form][ENBF] (EBNF)
-using plain text format.
+This LaTeX package helps you typeset an [Extended Backus-Naur Form][EBNF]
+(EBNF) using plain text format.
 
 First, [install it][LaTeX]
 from [CTAN](https://ctan.org/pkg/naive-ebnf)
@@ -28,7 +27,7 @@ Otherwise, you can download [`naive-ebnf.sty`][sty] and add to your project.
 
 ## How to Contribute
 
-If you want to contribute yourself, make a fork, then create a branch, 
+If you want to contribute yourself, make a fork, then create a branch,
 then run `l3build ctan` in the root directory.
 It should compile everything without errors. If not, submit an issue and wait.
 Otherwise, make your changes and then run `l3build ctan` again. If the build is
