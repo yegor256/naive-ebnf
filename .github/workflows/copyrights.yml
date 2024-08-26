@@ -20,30 +20,13 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 ---
-name: l3build
-on:
+name: copyrights
+'on':
   push:
-    branches: master
   pull_request:
-    branches: master
 jobs:
-  l3build:
-    runs-on: ${{ matrix.os }}
-    strategy:
-      matrix:
-        os: [ubuntu-20.04, macos-12]
+  copyrights:
+    runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v4
-      - run: sudo apt-get update && sudo apt-get -y install ghostscript
-        if: matrix.os == 'ubuntu-20.04'
-      - uses: teatimeguest/setup-texlive-action@v3.3.0
-        with:
-          update-all-packages: true
-          package-file: DEPENDS.txt
-      - run: l3build ctan --show-log-on-error --halt-on-error
-      - uses: JamesIves/github-pages-deploy-action@v4.6.3
-        with:
-          branch: gh-pages
-          folder: build/distrib/tds/tex/latex
-          clean: true
-        if: github.ref == 'refs/heads/master' && matrix.os == 'ubuntu-20.04'
+      - uses: yegor256/copyrights-action@0.0.4
