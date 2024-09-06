@@ -113,6 +113,7 @@
 % \item |[...]| denotes an optional substitution;
 % \item |{...}| denotes a zero or more times repetition;
 % \item |{...}+| denotes one or more times repetition;
+% \item \texttt{\char`\|\char`\|\char`\|} denotes an indent at the beginning of the string.
 % \item \texttt{\char`\|\char`\|} denotes an indented vertical bar at the beginning of the string.
 % \end{itemize}
 
@@ -231,6 +232,22 @@
 % <y> := [ [ "x1" ] { /[a-z]+/ } ] \\
 % <z> := { { { <x> }+ <y> } <z> }+ \\
 % <t> := [ <x> ] [ <y> ] \\
+% \end{ebnf}
+% \end{document}
+% \end{docshot}
+
+
+% The \texttt{\char`\|\char`\|\char`\|} character allows indenting the text on a new line, allowing breaking long expressions:
+% \docshotOptions{firstline=5,lastline=11}
+% \begin{docshot}
+% \documentclass{minimal}
+% \usepackage[T1]{fontenc}
+% \usepackage{naive-ebnf}
+% \begin{document}
+% \begin{ebnf}
+% <x> := "beginning"   \\
+% |||    ( <y> | <z> ) \\ 
+% |||    "ending"      \\
 % \end{ebnf}
 % \end{document}
 % \end{docshot}
@@ -407,6 +424,8 @@
     { >([^\s]) } {\\textgreater{}\1} \ebnf_tmp%
   \regex_replace_all:nnN
     { ([^\s])'([^\s]) } {\1\\textquotesingle{}\2} \ebnf_tmp%
+  \regex_replace_all:nnN { \|\|\| }%
+    {\c{makebox}[#1][r]{ }} \ebnf_tmp%
   \regex_replace_all:nnN
     { ([^\s])\|([^\s]) } {\1\\textbar{}\2} \ebnf_tmp%
   %
