@@ -1,0 +1,16 @@
+\input{regression-test.tex}
+\documentclass{article}
+\usepackage{naive-ebnf}
+\usepackage{mathtools}
+\begin{document}
+\START
+
+\begin{ebnf}
+<Expr> := <First>
+\end{ebnf}
+
+\begin{ebnf}
+<Expr> := <Second>
+\end{ebnf}
+
+\END
