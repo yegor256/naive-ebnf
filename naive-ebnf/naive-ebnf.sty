@@ -150,7 +150,7 @@
   \cs_undefine:N\ebnf_curled%
   \cs_new:Npn\ebnf_curled{%
     \regex_replace_all:nnNT
-    { \{\s(([^\s]*(\s[^\}\{]|\s(\}|\{)[^\s])?)*)\s\}(\+)? }%
+    { \{\s(([^\s]*(\s[^\}\{]|\s(\}|\{)[^\s])?)*)\s\}([\+\*])? }%
     {\c{ebnf@repetition}[\5]{\1}} \ebnf_tmp \ebnf_curled}%
   \ebnf_curled%
   \cs_undefine:N\ebnf_brackets%
