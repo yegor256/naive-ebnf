@@ -31,11 +31,11 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-20.04, macos-15]
+        os: [ubuntu-24.04, macos-15]
     steps:
       - uses: actions/checkout@v4
       - run: sudo apt-get update && sudo apt-get -y install ghostscript
-        if: matrix.os == 'ubuntu-20.04'
+        if: matrix.os == 'ubuntu-24.04'
       - run: brew install ghostscript
         if: matrix.os == 'macos-15'
       - uses: teatimeguest/setup-texlive-action@v3.3.4
@@ -48,4 +48,4 @@ jobs:
           branch: gh-pages
           folder: build/distrib/tds/tex/latex
           clean: true
-        if: github.ref == 'refs/heads/master' && matrix.os == 'ubuntu-20.04'
+        if: github.ref == 'refs/heads/master' && matrix.os == 'ubuntu-24.04'
