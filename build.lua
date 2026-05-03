@@ -10,7 +10,6 @@ checkengines = {"pdftex", "luatex", "xetex"}
 tagfiles = {"build.lua", "naive-ebnf.dtx"}
 cleanfiles = {"build", "_docshots", "*.run.xml", "*.log", "*.bcf", "*.glo", "*.fls", "*.idx", "*.out", "*.fdb_latexmk", "*.aux", "*.sty", "*.zip", "naive-ebnf.pdf", "*.bbl"}
 dynamicfiles = {"*.bbl"}
-tagfiles = {"naive-ebnf.dtx", "build.lua"}
 typesetruns = 2
 checkruns = 2
 
