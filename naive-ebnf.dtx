@@ -64,9 +64,9 @@
 %
 % \section{Introduction}
 %
-% This package helps render an
+% This package renders the
 % \href{https://en.wikipedia.org/wiki/Extended_Backus%E2%80%93Naur_form}{Extended Backus-Naur Form}
-% using plain text notation:
+% by means of a plain-text notation:
 % \begin{docshot}
 % \documentclass{minimal}
 % \usepackage{naive-ebnf}
@@ -81,23 +81,23 @@
 % \end{docshot}
 
 % \DescribeMacro{ebnf}
-% The |ebnf| environment \emph{doesn't} add any formatting to the paragraph, but only replaces the plain text symbols, such as ``|:=|'' and ``|<Var>|'' with proper \LaTeX{} commands.
-% The following syntax is understood inside the |ebnf| environment:
+% The |ebnf| environment \emph{does not} apply any formatting to the paragraph; rather, it merely substitutes plain-text symbols, such as ``|:=|'' and ``|<Var>|'', with the appropriate \LaTeX{} commands.
+% The following syntax is recognised within the |ebnf| environment:
 % \begin{itemize}
-% \item |:=| separates the left-hand side from the right-hand side of the production rule;
+% \item |:=| separates the left-hand side from the right-hand side of a production rule;
 % \item |<...>| denotes a non-terminal (variable);
 % \item |"..."| denotes a terminal symbol;
-% \item |'...'| denotes a special non-printable terminal symbol, like |'EOL'|;
-% \item \texttt{(...\char`\|...)} denotes a series of options to choose from;
-% \item |/.../| denotes a regular expression, like |/[a-z]+/|;
+% \item |'...'| denotes a special, non-printable terminal symbol, such as |'EOL'|;
+% \item \texttt{(...\char`\|...)} denotes a series of alternatives among which one is selected;
+% \item |/.../| denotes a regular expression, such as |/[a-z]+/|;
 % \item |[...]| denotes an optional substitution;
-% \item |{...}| denotes a zero or more times repetition;
-% \item |{...}+| denotes one or more times repetition;
-% \item \texttt{\char`\|\char`\|\char`\|} denotes an indent at the beginning of the string;
-% \item \texttt{\char`\|\char`\|} denotes an indented vertical bar at the beginning of the string.
+% \item |{...}| denotes a repetition of zero or more occurrences;
+% \item |{...}+| denotes a repetition of one or more occurrences;
+% \item \texttt{\char`\|\char`\|\char`\|} denotes an indent at the beginning of a line;
+% \item \texttt{\char`\|\char`\|} denotes an indented vertical bar at the beginning of a line.
 % \end{itemize}
 
-% \textbf{Attention}: The usage of some symbols is prohibited inside terminals. Instead, the following substitutions are recommended:
+% \textbf{Attention}: The use of certain symbols within terminals is prohibited. The following substitutions are recommended in their stead:
 % \begin{itemize}
 % \item |$\lparen$| and |$\rparen$| instead of ``|(|'' and ``|)|'' (from the \href{https://ctan.org/pkg/mathtools}{mathtools} package);
 % \item |$\langle$| and |$\rangle$| instead of ``|<|'' and ``|>|'';
@@ -106,7 +106,7 @@
 % \item |$\vert$| instead of ``\texttt{\char`\|}''.
 % \end{itemize}
 
-% They would look even better, if the following notation is used:
+% A still more agreeable rendering may be obtained through the following notation:
 % \begin{itemize}
 % \item |\char`\(| and |\char`\)| instead of ``|(|'' and ``|)|'';
 % \item |\char`\<| and |\char`\>| instead of ``|<|'' and ``|>|'';
@@ -115,8 +115,8 @@
 % \end{itemize}
 
 % \DescribeMacro{width}
-% There is an optional argument of |ebnf| environment, which sets the width of the left-hand side of each rule
-% (the default width is |6em|):
+% The |ebnf| environment accepts an optional argument that determines the width allocated to the left-hand side of each rule
+% (the default value being |6em|):
 % \docshotOptions{firstline=4,lastline=10}
 % \begin{docshot}
 % \documentclass{minimal}
@@ -135,7 +135,7 @@
 % \DescribeMacro{\EbnfTerminal}
 % \DescribeMacro{\EbnfNonTerminal}
 % \DescribeMacro{\EbnfSpecial}
-% Inside the text, terminals, non-terminals, and special terminals may be formatted using three supplementary commands:
+% Within the text, terminals, non-terminals, and special terminals may be typeset by means of three supplementary commands:
 % \docshotOptions{firstline=6,lastline=10}
 % \begin{docshot}
 % \documentclass{article}
@@ -150,7 +150,7 @@
 % with \EbnfTerminal{)}.
 % \end{document}
 % \end{docshot}
-% It's possible to use them in math-mode too, for example:
+% These commands are likewise admissible within math mode, for example:
 % \docshotOptions{firstline=6,lastline=9}
 % \begin{docshot}
 % \documentclass{article}
@@ -166,7 +166,7 @@
 % \end{docshot}
 
 % \DescribeMacro{\EbnfRegex}
-% A regular expression is possible too:
+% A regular expression is also admissible:
 % \docshotOptions{firstline=6,lastline=12}
 % \begin{docshot}
 % \documentclass{article}
@@ -184,7 +184,7 @@
 % \end{document}
 % \end{docshot}
 
-% Special symbols are interpreted correctly, if they stay inside quotes:
+% Special symbols are interpreted correctly when enclosed within quotes:
 % \docshotOptions{firstline=5,lastline=9}
 % \begin{docshot}
 % \documentclass{minimal}
@@ -199,7 +199,7 @@
 % \end{document}
 % \end{docshot}
 
-% Nested brackets work fine too:
+% Nested brackets are likewise handled correctly:
 % \docshotOptions{firstline=5,lastline=11}
 % \begin{docshot}
 % \documentclass{minimal}
@@ -217,7 +217,7 @@
 % \end{docshot}
 
 
-% The \texttt{\char`\|\char`\|\char`\|} character allows indenting the text on a new line, allowing breaking long expressions:
+% The \texttt{\char`\|\char`\|\char`\|} sequence permits the indentation of text on a new line, thus enabling the breaking of long expressions:
 % \docshotOptions{firstline=5,lastline=11}
 % \begin{docshot}
 % \documentclass{minimal}
@@ -234,10 +234,10 @@
 
 % \section{Package Options}
 
-% It's possible to configure the behavior of the package with the help of a few package options:
+% The behaviour of the package may be configured by means of several package options:
 
 % \DescribeMacro{bw}
-% By default, some colors are used in the rendered grammar. However, the |bw| package option disables any colors and makes sure the grammar is black-and-white:
+% By default, certain colours are employed in the rendered grammar. The |bw| package option, however, disables all colours and ensures that the grammar is rendered in black and white:
 %\iffalse
 %<*verb>
 %\fi
@@ -249,7 +249,7 @@
 %\fi
 
 % \DescribeMacro{trail}
-% The |ebnf| environment is doing pre-processing of the \TeX{} commands provided and then lets \LaTeX{} render them. It may be useful to see the output generated by the pre-processing. The |trail| option (with a file name) asks the package to save the content of the environment after the pre-processing into the file:
+% The |ebnf| environment performs a pre-processing step on the supplied \TeX{} commands before delegating their rendering to \LaTeX{}. Inspection of the output produced by this pre-processing can prove useful. The |trail| option, accompanied by a file name, instructs the package to save the post-processed content of the environment to the designated file:
 %\iffalse
 %<*verb>
 %\fi
