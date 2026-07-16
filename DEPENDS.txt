@@ -1,6 +1,8 @@
 hard pgfopts
+soft bookmark
 soft docshots
 soft etoolbox
+soft fail-fast
 soft filecontentsdef
 soft href-ul
 soft hypdoc
@@ -12,4 +14,5 @@ soft microtype
 soft newtx
 soft pgfopts
 soft scheme-basic
+soft silence
 soft xetex
