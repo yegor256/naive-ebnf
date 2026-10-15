@@ -1,4 +1,5 @@
 hard pgfopts
+hard xcolor
 soft bookmark
 soft docshots
 soft etoolbox
@@ -12,7 +13,6 @@ soft lm
 soft mathtools
 soft microtype
 soft newtx
-soft pgfopts
 soft scheme-basic
 soft silence
 soft xetex
