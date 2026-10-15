@@ -106,7 +106,7 @@
 
 % Brackets of all three kinds are recognised only when whitespace separates them from their content: \texttt{( <x> \textbar{} <y> )} is a group, whereas \texttt{(<x>\textbar<y>)} is left as plain text. The same rule is what keeps |"("| a terminal.
 
-% \textbf{Attention}: The use of certain symbols within terminals is prohibited. The following substitutions are recommended in their stead:
+% \textbf{Attention}: Braces never print within a terminal: a balanced pair vanishes into a \TeX{} group, an unbalanced one stops the compilation. The symbols |(|, |)|, |<|, |>|, |[|, |]| and \texttt{\char`\|} print literally as long as no space is adjacent to them, as in |"("| or |"a<b"|; once surrounded by spaces, as in |"a < b"|, they are taken for EBNF syntax. The following substitutions are recommended in all other cases:
 % \begin{itemize}
 % \item |$\lparen$| and |$\rparen$| instead of ``|(|'' and ``|)|'' (from the \href{https://ctan.org/pkg/mathtools}{mathtools} package);
 % \item |$\langle$| and |$\rangle$| instead of ``|<|'' and ``|>|'';
@@ -189,7 +189,7 @@
 % \end{document}
 % \end{docshot}
 
-% Special symbols are interpreted correctly when enclosed within quotes:
+% Special symbols print literally when they sit right next to the quotes:
 % \begin{docshot}[options={firstline=5,lastline=9}]
 % \documentclass{minimal}
 % \usepackage[T1]{fontenc}
