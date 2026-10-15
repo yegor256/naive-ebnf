@@ -1,0 +1,29 @@
+% SPDX-FileCopyrightText: Copyright (c) 2023-2026 Yegor Bugayenko
+% SPDX-License-Identifier: MIT
+
+\input{regression-test.tex}
+\documentclass{article}
+\usepackage[trail=log.txt]{naive-ebnf}
+\makeatletter
+\newread\trails@read
+\AtEndDocument{%
+  \begingroup\endlinechar=-1
+  \openin\trails@read=log.txt\relax
+  \loop\unless\ifeof\trails@read
+    \readline\trails@read to \trails@line
+    \ifx\trails@line\empty\else\TYPE{\trails@line}\fi
+  \repeat
+  \closein\trails@read\endgroup}
+\makeatother
+\begin{document}
+\START
+
+\begin{ebnf}
+<X> := "x"
+\end{ebnf}
+
+\begin{ebnf}
+<Y> := "y"
+\end{ebnf}
+
+\end{document}

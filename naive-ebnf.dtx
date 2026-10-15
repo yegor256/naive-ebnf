@@ -249,7 +249,7 @@
 %\fi
 
 % \DescribeMacro{trail}
-% The |ebnf| environment performs a pre-processing step on the supplied \TeX{} commands before delegating their rendering to \LaTeX{}. Inspection of the output produced by this pre-processing can prove useful. The |trail| option, accompanied by a file name, instructs the package to save the post-processed content of the environment to the designated file:
+% The |ebnf| environment performs a pre-processing step on the supplied \TeX{} commands before delegating their rendering to \LaTeX{}. Inspection of the output produced by this pre-processing can prove useful. The |trail| option, accompanied by a file name, instructs the package to save the post-processed content of every |ebnf| environment, in document order, to the designated file:
 %\iffalse
 %<*verb>
 %\fi
@@ -281,11 +281,13 @@
 %    \end{macrocode}
 
 % \begin{macro}{\ebnf@write}
-% If the |trail| option is set, we allocate a single output stream for the trail file, since \TeX{} has only sixteen of them:
+% If the |trail| option is set, we allocate a single output stream for the trail file, since \TeX{} has only sixteen of them, open the file once, and close it at the end of the document, so that every |ebnf| environment appends to it:
 %    \begin{macrocode}
 \makeatletter
 \ifdefined\ebnf@trail
   \newwrite\ebnf@write
+  \immediate\openout\ebnf@write\ebnf@trail\relax
+  \AtEndDocument{\immediate\closeout\ebnf@write}
 \fi
 \makeatother
 %    \end{macrocode}
@@ -458,9 +460,7 @@
   \tl_put_left:Nn \ebnf_tmp {\noindent}
   \tl_put_right:Nn \ebnf_tmp {}
   \ifdefined\ebnf@trail%
-    \immediate\openout\ebnf@write\ebnf@trail\relax%
     \immediate\write\ebnf@write{\unexpanded\expandafter{\ebnf_tmp}}%
-    \immediate\closeout\ebnf@write%
     \message{naive-ebnf:\space pre-processed\space TeX
       \space saved\space to\space "\ebnf@trail"^^J}%
   \fi%
