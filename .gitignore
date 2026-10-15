@@ -32,5 +32,5 @@ naive-ebnf.ret
 naive-ebnf.stderr
 naive-ebnf.stdout
 naive-ebnf.tex
-naive-ebnf.tmp.pl
+naive-ebnf.tmp.tex
 node_modules/
