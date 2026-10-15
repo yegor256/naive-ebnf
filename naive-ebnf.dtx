@@ -124,8 +124,7 @@
 % \DescribeMacro{width}
 % The |ebnf| environment accepts an optional argument that determines the width allocated to the left-hand side of each rule
 % (the default value being |4em|):
-% \docshotOptions{firstline=4,lastline=10}
-% \begin{docshot}
+% \begin{docshot}[options={firstline=4,lastline=10}]
 % \documentclass{minimal}
 % \usepackage{naive-ebnf}
 % \begin{document}\noindent
@@ -143,8 +142,7 @@
 % \DescribeMacro{\EbnfNonTerminal}
 % \DescribeMacro{\EbnfSpecial}
 % Within the text, terminals, non-terminals, and special terminals may be typeset by means of three supplementary commands:
-% \docshotOptions{firstline=6,lastline=10}
-% \begin{docshot}
+% \begin{docshot}[options={firstline=6,lastline=10}]
 % \documentclass{article}
 % \pagestyle{empty}
 % \usepackage[paperwidth=3in]{geometry}
@@ -158,8 +156,7 @@
 % \end{document}
 % \end{docshot}
 % These commands are likewise admissible within math mode, for example:
-% \docshotOptions{firstline=6,lastline=9}
-% \begin{docshot}
+% \begin{docshot}[options={firstline=6,lastline=9}]
 % \documentclass{article}
 % \pagestyle{empty}
 % \usepackage[paperwidth=3in]{geometry}
@@ -174,8 +171,7 @@
 
 % \DescribeMacro{\EbnfRegex}
 % A regular expression is also admissible:
-% \docshotOptions{firstline=6,lastline=12}
-% \begin{docshot}
+% \begin{docshot}[options={firstline=6,lastline=12}]
 % \documentclass{article}
 % \pagestyle{empty}
 % \usepackage[paperwidth=4in]{geometry}
@@ -192,8 +188,7 @@
 % \end{docshot}
 
 % Special symbols are interpreted correctly when enclosed within quotes:
-% \docshotOptions{firstline=5,lastline=9}
-% \begin{docshot}
+% \begin{docshot}[options={firstline=5,lastline=9}]
 % \documentclass{minimal}
 % \usepackage[T1]{fontenc}
 % \usepackage{naive-ebnf}
@@ -207,8 +202,7 @@
 % \end{docshot}
 
 % Nested brackets are likewise handled correctly:
-% \docshotOptions{firstline=5,lastline=11}
-% \begin{docshot}
+% \begin{docshot}[options={firstline=5,lastline=11}]
 % \documentclass{minimal}
 % \usepackage[T1]{fontenc}
 % \usepackage{naive-ebnf}
@@ -225,8 +219,7 @@
 
 
 % The \texttt{\char`\|\char`\|\char`\|} sequence permits the indentation of text on a new line, thus enabling the breaking of long expressions:
-% \docshotOptions{firstline=5,lastline=9}
-% \begin{docshot}
+% \begin{docshot}[options={firstline=5,lastline=9}]
 % \documentclass{minimal}
 % \usepackage[T1]{fontenc}
 % \usepackage{naive-ebnf}
