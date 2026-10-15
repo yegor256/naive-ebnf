@@ -15,7 +15,7 @@ checkruns = 2
 
 uploadconfig = {
   pkg = "naive-ebnf",
-  version = "0.0.0 0000-00-00",
+  version = "0.1.0 2026-10-15",
   author = "Yegor Bugayenko",
   uploader = "Yegor Bugayenko",
   email = "yegor256@gmail.com",
