@@ -287,6 +287,17 @@
 \ProcessPgfPackageOptions{/ebnf}
 %    \end{macrocode}
 
+% \begin{macro}{\ebnf@write}
+% If the |trail| option is set, we allocate a single output stream for the trail file, since \TeX{} has only sixteen of them:
+%    \begin{macrocode}
+\makeatletter
+\ifdefined\ebnf@trail
+  \newwrite\ebnf@write
+\fi
+\makeatother
+%    \end{macrocode}
+% \end{macro}
+
 % Then, we include a few packages, mostly to deal with \LaTeX{}3 expressions:
 %    \begin{macrocode}
 \RequirePackage{expl3}
@@ -454,7 +465,6 @@
   \tl_put_left:Nn \ebnf_tmp {\noindent}
   \tl_put_right:Nn \ebnf_tmp {}
   \ifdefined\ebnf@trail%
-    \newwrite\ebnf@write%
     \immediate\openout\ebnf@write\ebnf@trail\relax%
     \immediate\write\ebnf@write{\unexpanded\expandafter{\ebnf_tmp}}%
     \immediate\closeout\ebnf@write%

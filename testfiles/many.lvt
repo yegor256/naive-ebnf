@@ -1,0 +1,90 @@
+% SPDX-FileCopyrightText: Copyright (c) 2023-2026 Yegor Bugayenko
+% SPDX-License-Identifier: MIT
+
+\input{regression-test.tex}
+\documentclass{article}
+\usepackage[trail=log.txt]{naive-ebnf}
+\begin{document}
+\START
+
+\begin{ebnf}
+<X1> := "x"
+\end{ebnf}
+
+\begin{ebnf}
+<X2> := "x"
+\end{ebnf}
+
+\begin{ebnf}
+<X3> := "x"
+\end{ebnf}
+
+\begin{ebnf}
+<X4> := "x"
+\end{ebnf}
+
+\begin{ebnf}
+<X5> := "x"
+\end{ebnf}
+
+\begin{ebnf}
+<X6> := "x"
+\end{ebnf}
+
+\begin{ebnf}
+<X7> := "x"
+\end{ebnf}
+
+\begin{ebnf}
+<X8> := "x"
+\end{ebnf}
+
+\begin{ebnf}
+<X9> := "x"
+\end{ebnf}
+
+\begin{ebnf}
+<X10> := "x"
+\end{ebnf}
+
+\begin{ebnf}
+<X11> := "x"
+\end{ebnf}
+
+\begin{ebnf}
+<X12> := "x"
+\end{ebnf}
+
+\begin{ebnf}
+<X13> := "x"
+\end{ebnf}
+
+\begin{ebnf}
+<X14> := "x"
+\end{ebnf}
+
+\begin{ebnf}
+<X15> := "x"
+\end{ebnf}
+
+\begin{ebnf}
+<X16> := "x"
+\end{ebnf}
+
+\begin{ebnf}
+<X17> := "x"
+\end{ebnf}
+
+\begin{ebnf}
+<X18> := "x"
+\end{ebnf}
+
+\begin{ebnf}
+<X19> := "x"
+\end{ebnf}
+
+\begin{ebnf}
+<X20> := "x"
+\end{ebnf}
+
+\END
