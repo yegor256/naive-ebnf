@@ -135,7 +135,6 @@
 \makeatother
 
 \ExplSyntaxOn
-\cs_generate_variant:Nn \tl_replace_all:Nnn {Nx}
 \makeatletter
 \NewDocumentEnvironment{ebnf}{O{4em}+b}
   {\tl_set:Nn\ebnf_tmp{#2}}
@@ -189,7 +188,6 @@
   \regex_replace_all:nnN { := }%
     {\c{ebnf@to}{}} \ebnf_tmp%
   \tl_put_left:Nn \ebnf_tmp {\noindent}
-  \tl_put_right:Nn \ebnf_tmp {}
   \ifdefined\ebnf@trail%
     \immediate\write\ebnf@write{\unexpanded\expandafter{\ebnf_tmp}}%
     \message{naive-ebnf:\space pre-processed\space TeX
