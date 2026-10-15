@@ -104,6 +104,8 @@
 % \item \texttt{\char`\|\char`\|} denotes an indented vertical bar at the beginning of a line.
 % \end{itemize}
 
+% Brackets of all three kinds are recognised only when whitespace separates them from their content: \texttt{( <x> \textbar{} <y> )} is a group, whereas \texttt{(<x>\textbar<y>)} is left as plain text. The same rule is what keeps |"("| a terminal.
+
 % \textbf{Attention}: The use of certain symbols within terminals is prohibited. The following substitutions are recommended in their stead:
 % \begin{itemize}
 % \item |$\lparen$| and |$\rparen$| instead of ``|(|'' and ``|)|'' (from the \href{https://ctan.org/pkg/mathtools}{mathtools} package);
