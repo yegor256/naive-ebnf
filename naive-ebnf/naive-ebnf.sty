@@ -61,6 +61,8 @@
 \makeatletter
 \ifdefined\ebnf@trail
   \newwrite\ebnf@write
+  \immediate\openout\ebnf@write\ebnf@trail\relax
+  \AtEndDocument{\immediate\closeout\ebnf@write}
 \fi
 \makeatother
 
@@ -188,9 +190,7 @@
   \tl_put_left:Nn \ebnf_tmp {\noindent}
   \tl_put_right:Nn \ebnf_tmp {}
   \ifdefined\ebnf@trail%
-    \immediate\openout\ebnf@write\ebnf@trail\relax%
     \immediate\write\ebnf@write{\unexpanded\expandafter{\ebnf_tmp}}%
-    \immediate\closeout\ebnf@write%
     \message{naive-ebnf:\space pre-processed\space TeX
       \space saved\space to\space "\ebnf@trail"^^J}%
   \fi%
