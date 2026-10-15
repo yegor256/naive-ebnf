@@ -58,6 +58,12 @@
 }
 \ProcessPgfPackageOptions{/ebnf}
 
+\makeatletter
+\ifdefined\ebnf@trail
+  \newwrite\ebnf@write
+\fi
+\makeatother
+
 \RequirePackage{expl3}
 
 \makeatletter\ifdefined\ebnf@bw\else
@@ -182,7 +188,6 @@
   \tl_put_left:Nn \ebnf_tmp {\noindent}
   \tl_put_right:Nn \ebnf_tmp {}
   \ifdefined\ebnf@trail%
-    \newwrite\ebnf@write%
     \immediate\openout\ebnf@write\ebnf@trail\relax%
     \immediate\write\ebnf@write{\unexpanded\expandafter{\ebnf_tmp}}%
     \immediate\closeout\ebnf@write%
