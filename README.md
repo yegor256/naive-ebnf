@@ -1,4 +1,4 @@
-# EBNF Diagrams in LaTeX
+# EBNF in Plain Text in LaTeX
 
 [![l3build](https://github.com/yegor256/naive-ebnf/actions/workflows/l3build.yml/badge.svg)](https://github.com/yegor256/naive-ebnf/actions/workflows/l3build.yml)
 [![CTAN](https://img.shields.io/ctan/v/naive-ebnf)](https://ctan.org/pkg/naive-ebnf)
@@ -16,9 +16,9 @@ and then use in the preamble:
 \usepackage{naive-ebnf}
 \begin{document}
 \begin{ebnf}
-<Expression> := <Variable>
-  | "$\lambda$" <Variable> "." <Expression>
-  | "(" <Expression> <Expression> ")"
+<Expression> := <Variable> \\
+  || "$\lambda$" <Variable> "." <Expression> \\
+  || "(" <Expression> <Expression> ")"
 \end{ebnf}
 \end{document}
 ```
